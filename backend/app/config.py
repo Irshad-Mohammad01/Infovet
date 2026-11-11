@@ -52,7 +52,27 @@ class Settings(BaseSettings):
         # Providers like Neon or Render sometimes output 'postgres://', which SQLAlchemy
         # expects as 'postgresql://'
         if v.startswith("postgres://"):
-            return v.replace("postgres://", "postgresql://", 1)
+            v = v.replace("postgres://", "postgresql://", 1)
+
+        # Handle postgresql+psycopg:// (Psycopg 3) fallback if psycopg 3 is not installed
+        if v.startswith("postgresql+psycopg://"):
+            try:
+                import psycopg  # noqa: F401
+            except ImportError:
+                # Fallback to standard psycopg2
+                v = v.replace("postgresql+psycopg://", "postgresql://", 1)
+
+        # Handle postgresql:// fallback if psycopg2 is missing but psycopg 3 is installed
+        elif v.startswith("postgresql://") and not v.startswith("postgresql+"):
+            try:
+                import psycopg2  # noqa: F401
+            except ImportError:
+                try:
+                    import psycopg  # noqa: F401
+                    v = v.replace("postgresql://", "postgresql+psycopg://", 1)
+                except ImportError:
+                    pass
+
         if v.startswith("libsql://"):
             normalized = "sqlite+libsql://" + v[len("libsql://"):]
             if "secure=" not in normalized:
