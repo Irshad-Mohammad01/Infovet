@@ -85,3 +85,15 @@ def test_libsql_engine_url_does_not_leak_token(monkeypatch):
     # The auth token must NOT appear in engine.url or str(engine.url)
     assert secret not in str(engine.url)
     assert secret not in str(engine)
+
+
+def test_postgres_url_normalization_and_driver_fallback():
+    """Verify postgres:// and postgresql+psycopg:// normalize properly for SQLAlchemy."""
+    # 1. postgres:// converts to postgresql://
+    s1 = Settings(database_url="postgres://user:pass@host/db", turso_database_url=None)
+    assert s1.database_url == "postgresql://user:pass@host/db"
+
+    # 2. postgresql+psycopg:// automatically falls back to postgresql:// if psycopg 3 is not installed
+    s2 = Settings(database_url="postgresql+psycopg://user:pass@host/db", turso_database_url=None)
+    assert s2.database_url == "postgresql://user:pass@host/db"
+
