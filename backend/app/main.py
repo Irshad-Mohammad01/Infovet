@@ -22,6 +22,8 @@ from app.routes import (
     admin_router,
     applications_router,
     auth_router,
+    company_admin_router,
+    company_router,
     contact_router,
     jobs_router,
     saved_jobs_router,
@@ -40,10 +42,9 @@ logger = logging.getLogger("infovet.api")
 async def lifespan(_: FastAPI):
     # Ensure upload directories exist
     upload_path = Path(settings.upload_dir)
-    (upload_path / "resumes").mkdir(parents=True, exist_ok=True)
-    (upload_path / "avatars").mkdir(parents=True, exist_ok=True)
-    (upload_path / "logos").mkdir(parents=True, exist_ok=True)
-    logger.info("INFOVET API initialized successfully in %s mode.", settings.environment)
+    for sub in ["resumes", "avatars", "logos", "projects", "services", "team", "media", "attachments"]:
+        (upload_path / sub).mkdir(parents=True, exist_ok=True)
+    logger.info("INFOVET Software Company API initialized successfully in %s mode.", settings.environment)
 
     if not settings.is_email_configured:
         logger.info("SMTP is unconfigured: email notifications will be simulated in server logs.")
@@ -52,9 +53,9 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(
-    title="INFOVET Job Portal API",
-    description="Production REST API for INFOVET — Professional Job Portal.",
-    version="2.0.0",
+    title="INFOVET Software Development Company API",
+    description="Production REST API for INFOVET — Software Development & IT Solutions Company.",
+    version="3.0.0",
     lifespan=lifespan,
 )
 
@@ -89,6 +90,8 @@ app.add_middleware(
 )
 
 # Mount all feature routers
+app.include_router(company_router)
+app.include_router(company_admin_router)
 app.include_router(settings_router)
 app.include_router(auth_router)
 app.include_router(jobs_router)

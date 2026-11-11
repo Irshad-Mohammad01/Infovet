@@ -142,7 +142,7 @@ def test_admin_can_upload_logo_and_serve(client, admin_token, customer_token):
         headers={"Authorization": f"Bearer {admin_token}"},
     )
     assert res_bad.status_code == 400
-    assert "Invalid logo image type" in res_bad.json()["detail"]
+    assert "Invalid image type" in res_bad.json()["detail"]
 
     # 4. Valid logo upload succeeds
     res_admin = client.post(

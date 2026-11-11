@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Briefcase,
-  Users,
-  CheckCircle,
-  FolderTree,
-  PlusCircle,
-  Eye,
-  ArrowRight,
-  TrendingUp,
-  Clock,
+  FolderGit2,
   Layers,
+  Inbox,
+  AlertCircle,
+  Cpu,
+  MessageSquare,
+  Users,
+  PlusCircle,
+  ArrowRight,
+  Clock,
+  Eye,
+  CheckCircle2,
+  ExternalLink,
 } from 'lucide-react';
-import { fetchAdminStats } from '../../services/api';
+import { fetchCompanyAdminStats } from '../../services/api';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
-import ApplicationStatusBadge from '../../components/jobs/ApplicationStatusBadge';
+
+const STATUS_COLORS = {
+  New: { bg: '#EFF6FF', text: '#2563EB', border: '#BFDBFE' },
+  Contacted: { bg: '#FEF3C7', text: '#D97706', border: '#FDE68A' },
+  'In Discussion': { bg: '#F3E8FF', text: '#9333EA', border: '#E9D5FF' },
+  'Proposal Sent': { bg: '#E0E7FF', text: '#4F46E5', border: '#C7D2FE' },
+  Converted: { bg: '#DCFCE7', text: '#15803D', border: '#BBF7D0' },
+  Closed: { bg: '#F1F5F9', text: '#475569', border: '#E2E8F0' },
+};
 
 const AdminDashboard = () => {
   const [stats, setStats] = useState(null);
@@ -25,10 +36,10 @@ const AdminDashboard = () => {
     setLoading(true);
     setError('');
     try {
-      const data = await fetchAdminStats();
+      const data = await fetchCompanyAdminStats();
       setStats(data);
     } catch (err) {
-      setError(err.message || 'Failed to load administrative analytics.');
+      setError(err.message || 'Failed to load executive statistics.');
     } finally {
       setLoading(false);
     }
@@ -39,7 +50,7 @@ const AdminDashboard = () => {
   }, []);
 
   if (loading) {
-    return <LoadingSpinner text="Loading dashboard metrics..." />;
+    return <LoadingSpinner text="Loading executive metrics..." />;
   }
 
   if (error) {
@@ -55,274 +66,292 @@ const AdminDashboard = () => {
 
   const metricCards = [
     {
-      label: 'Total Jobs',
-      value: stats?.total_jobs ?? 0,
-      icon: Briefcase,
+      label: 'Total Projects',
+      value: stats?.total_projects ?? 0,
+      icon: FolderGit2,
       color: '#6025C5',
       bg: 'rgba(96, 37, 197, 0.08)',
-      link: '/admin/jobs',
+      link: '/admin/projects',
+      sub: `${stats?.featured_projects ?? 0} featured on homepage`,
     },
     {
-      label: 'Active Listings',
-      value: stats?.active_jobs ?? 0,
-      icon: CheckCircle,
+      label: 'Services Offered',
+      value: stats?.total_services ?? 0,
+      icon: Layers,
+      color: '#0284C7',
+      bg: 'rgba(2, 132, 199, 0.08)',
+      link: '/admin/services',
+      sub: 'Active business capabilities',
+    },
+    {
+      label: 'Client Inquiries',
+      value: stats?.total_inquiries ?? 0,
+      icon: Inbox,
       color: '#16A34A',
       bg: 'rgba(22, 163, 74, 0.08)',
-      link: '/admin/jobs',
+      link: '/admin/inquiries',
+      sub: `${stats?.new_inquiries ?? 0} awaiting review`,
     },
     {
-      label: 'Total Applicants',
-      value: stats?.total_applications ?? 0,
-      icon: Users,
-      color: '#2563EB',
-      bg: 'rgba(37, 99, 235, 0.08)',
-      link: '/admin/applicants',
-    },
-    {
-      label: 'Registered Users',
-      value: stats?.total_users ?? 0,
-      icon: TrendingUp,
+      label: 'Technologies Stack',
+      value: stats?.total_technologies ?? 0,
+      icon: Cpu,
       color: '#F59E0B',
       bg: 'rgba(245, 158, 11, 0.08)',
-      link: '/admin/users',
+      link: '/admin/technologies',
+      sub: 'Languages, frameworks & clouds',
     },
     {
-      label: 'Job Categories',
-      value: stats?.total_categories ?? 0,
-      icon: FolderTree,
+      label: 'Client Reviews',
+      value: stats?.total_testimonials ?? 0,
+      icon: MessageSquare,
+      color: '#9333EA',
+      bg: 'rgba(147, 51, 234, 0.08)',
+      link: '/admin/testimonials',
+      sub: 'Verified client feedback',
+    },
+    {
+      label: 'Engineering Team',
+      value: stats?.total_team_members ?? 0,
+      icon: Users,
       color: '#0D9488',
       bg: 'rgba(13, 148, 136, 0.08)',
-      link: '/admin/categories',
+      link: '/admin/team',
+      sub: 'Architects & leaders',
     },
   ];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-      {/* Page Header */}
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '1rem',
-        }}
-      >
+      {/* Top Header & Actions */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: 700, margin: 0 }}>Portal Overview</h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '0.25rem' }}>
-            Real-time activity and health metrics across the Infovet ecosystem
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'var(--text)', marginBottom: '0.25rem' }}>
+            Executive Dashboard
+          </h1>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
+            Real-time analytics and management for INFOVET Software Solutions.
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem' }}>
-          <Link
-            to="/admin/jobs/new"
-            className="btn btn-primary btn-sm"
-            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
-          >
-            <PlusCircle size={16} /> Post New Job
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <Link to="/admin/projects/new" className="btn btn-primary btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+            <PlusCircle size={15} />
+            <span>Add New Project</span>
           </Link>
-          <Link
-            to="/admin/applicants"
-            className="btn btn-outline btn-sm"
-            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
-          >
-            <Users size={16} /> View All Applicants
+          <Link to="/admin/inquiries" className="btn btn-outline btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
+            <Inbox size={15} />
+            <span>View Inquiries</span>
           </Link>
         </div>
       </div>
 
-      {/* Metrics Grid */}
+      {/* KPI Cards Grid */}
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
           gap: '1.25rem',
         }}
       >
-        {metricCards.map((m) => {
+        {metricCards.map((m, idx) => {
           const Icon = m.icon;
           return (
             <Link
-              key={m.label}
+              key={idx}
               to={m.link}
-              className="card"
               style={{
-                padding: '1.5rem',
                 textDecoration: 'none',
                 color: 'inherit',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                transition: 'transform 0.15s ease, box-shadow 0.15s ease',
               }}
             >
-              <div>
-                <div style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                  {m.label}
-                </div>
-                <div style={{ fontSize: '2rem', fontWeight: 800, marginTop: '0.25rem', color: 'var(--text-primary)' }}>
-                  {m.value}
-                </div>
-              </div>
               <div
+                className="card"
                 style={{
-                  width: '48px',
-                  height: '48px',
-                  borderRadius: '12px',
-                  backgroundColor: m.bg,
-                  color: m.color,
+                  padding: '1.5rem',
+                  border: '1px solid var(--border)',
+                  borderRadius: '14px',
                   display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  height: '100%',
+                  transition: 'transform 0.15s ease, box-shadow 0.15s ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-hover)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
                 }}
               >
-                <Icon size={24} />
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                  <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-secondary)' }}>
+                    {m.label}
+                  </span>
+                  <div
+                    style={{
+                      width: '40px',
+                      height: '40px',
+                      borderRadius: '10px',
+                      backgroundColor: m.bg,
+                      color: m.color,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Icon size={20} />
+                  </div>
+                </div>
+
+                <div>
+                  <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text)', lineHeight: 1 }}>
+                    {m.value}
+                  </div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
+                    {m.sub}
+                  </div>
+                </div>
               </div>
             </Link>
           );
         })}
       </div>
 
-      {/* Recent Lists Grid */}
+      {/* Two Column Layout: Recent Inquiries & Recent Projects */}
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(440px, 1fr))',
-          gap: '1.5rem',
+          gap: '2rem',
         }}
       >
-        {/* Recent Applicants */}
-        <div className="card" style={{ padding: '1.5rem' }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: '1.25rem',
-              paddingBottom: '0.75rem',
-              borderBottom: '1px solid var(--border-color)',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Users size={18} style={{ color: 'var(--primary)' }} />
-              <h2 style={{ fontSize: '1.125rem', fontWeight: 700, margin: 0 }}>
-                Recent Applications
-              </h2>
-            </div>
-            <Link
-              to="/admin/applicants"
-              style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
-            >
-              View all <ArrowRight size={14} />
+        {/* Recent Inquiries Panel */}
+        <div className="card" style={{ padding: '1.75rem', border: '1px solid var(--border)', borderRadius: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <h2 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text)' }}>
+              Recent Project Inquiries
+            </h2>
+            <Link to="/admin/inquiries" style={{ fontSize: '0.8125rem', color: 'var(--primary)', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+              <span>View All</span>
+              <ArrowRight size={14} />
             </Link>
           </div>
 
-          {!stats?.recent_applications || stats.recent_applications.length === 0 ? (
+          {!stats?.recent_inquiries || stats.recent_inquiries.length === 0 ? (
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', textAlign: 'center', padding: '2rem 0' }}>
-              No candidates have applied yet.
+              No project inquiries yet. Submissions from the contact page will appear here.
             </p>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {stats.recent_applications.map((app) => (
-                <div
-                  key={app.id}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '0.75rem',
-                    borderRadius: '8px',
-                    backgroundColor: '#FAFAFC',
-                    gap: '1rem',
-                  }}
-                >
-                  <div style={{ minWidth: 0, flex: 1 }}>
-                    <div style={{ fontWeight: 600, fontSize: '0.875rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {app.full_name}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+              {stats.recent_inquiries.slice(0, 5).map((inq) => {
+                const statusStyle = STATUS_COLORS[inq.status] || STATUS_COLORS.New;
+                return (
+                  <div
+                    key={inq.id}
+                    style={{
+                      padding: '1rem',
+                      borderRadius: '10px',
+                      backgroundColor: 'var(--bg)',
+                      border: '1px solid var(--border)',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text)' }}>
+                        {inq.client_name} {inq.company ? `(${inq.company})` : ''}
+                      </div>
+                      <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
+                        {inq.project_type || 'Software Project'} • {inq.budget_range || 'Flexible'}
+                      </div>
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {app.job?.title || 'Job Listing'}
+                    <div style={{ textAlign: 'right' }}>
+                      <span
+                        style={{
+                          fontSize: '0.725rem',
+                          fontWeight: 700,
+                          padding: '0.2rem 0.6rem',
+                          borderRadius: '999px',
+                          backgroundColor: statusStyle.bg,
+                          color: statusStyle.text,
+                          border: `1px solid ${statusStyle.border}`,
+                        }}
+                      >
+                        {inq.status}
+                      </span>
+                      <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>
+                        {new Date(inq.created_at).toLocaleDateString()}
+                      </div>
                     </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <ApplicationStatusBadge status={app.status} />
-                    <Link
-                      to={`/admin/applicants?id=${app.id}`}
-                      className="btn btn-outline btn-xs"
-                      title="Inspect Application"
-                    >
-                      <Eye size={14} />
-                    </Link>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
 
-        {/* Recent Job Listings */}
-        <div className="card" style={{ padding: '1.5rem' }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              marginBottom: '1.25rem',
-              paddingBottom: '0.75rem',
-              borderBottom: '1px solid var(--border-color)',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Briefcase size={18} style={{ color: 'var(--primary)' }} />
-              <h2 style={{ fontSize: '1.125rem', fontWeight: 700, margin: 0 }}>
-                Recent Job Listings
-              </h2>
-            </div>
-            <Link
-              to="/admin/jobs"
-              style={{ fontSize: '0.8125rem', fontWeight: 600, color: 'var(--primary)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
-            >
-              View all <ArrowRight size={14} />
+        {/* Recent Projects Panel */}
+        <div className="card" style={{ padding: '1.75rem', border: '1px solid var(--border)', borderRadius: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <h2 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text)' }}>
+              Projects Overview
+            </h2>
+            <Link to="/admin/projects" style={{ fontSize: '0.8125rem', color: 'var(--primary)', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+              <span>Manage Projects</span>
+              <ArrowRight size={14} />
             </Link>
           </div>
 
-          {!stats?.recent_jobs || stats.recent_jobs.length === 0 ? (
+          {!stats?.recent_projects || stats.recent_projects.length === 0 ? (
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', textAlign: 'center', padding: '2rem 0' }}>
-              No jobs posted yet.
+              No projects added yet. Click "Add New Project" to create your first portfolio case study.
             </p>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {stats.recent_jobs.map((job) => (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+              {stats.recent_projects.slice(0, 5).map((proj) => (
                 <div
-                  key={job.id}
+                  key={proj.id}
                   style={{
+                    padding: '1rem',
+                    borderRadius: '10px',
+                    backgroundColor: 'var(--bg)',
+                    border: '1px solid var(--border)',
                     display: 'flex',
-                    alignItems: 'center',
                     justifyContent: 'space-between',
-                    padding: '0.75rem',
-                    borderRadius: '8px',
-                    backgroundColor: '#FAFAFC',
-                    gap: '1rem',
+                    alignItems: 'center',
                   }}
                 >
-                  <div style={{ minWidth: 0, flex: 1 }}>
-                    <div style={{ fontWeight: 600, fontSize: '0.875rem', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                      {job.title}
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text)' }}>
+                      {proj.title}
                     </div>
-                    <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                      {job.company} • {job.location}
+                    <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
+                      {proj.category} • Client: {proj.client_name || 'Internal'}
                     </div>
                   </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <span className={`badge ${job.is_active ? 'badge-success' : 'badge-neutral'}`}>
-                      {job.is_active ? 'Active' : 'Draft'}
-                    </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    {proj.is_featured && (
+                      <span
+                        style={{
+                          fontSize: '0.7rem',
+                          fontWeight: 700,
+                          padding: '0.15rem 0.5rem',
+                          borderRadius: '999px',
+                          backgroundColor: 'var(--primary-light)',
+                          color: 'var(--primary)',
+                        }}
+                      >
+                        Featured
+                      </span>
+                    )}
                     <Link
-                      to={`/admin/jobs/${job.id}/edit`}
-                      className="btn btn-outline btn-xs"
-                      title="Edit Job"
+                      to={`/admin/projects/${proj.id}/edit`}
+                      className="btn btn-outline btn-sm"
+                      style={{ padding: '0.25rem 0.65rem', fontSize: '0.75rem' }}
                     >
                       Edit
                     </Link>
@@ -338,4 +367,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-

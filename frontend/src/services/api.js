@@ -187,6 +187,198 @@ export const uploadPlatformLogo = (file) => {
 };
 
 /* --------------------------------------------------------------------------
+   Company & Software Solutions Public Endpoints
+   -------------------------------------------------------------------------- */
+
+export const fetchCompanyProfile = () =>
+  request('/api/company/profile');
+
+export const fetchServices = () =>
+  request('/api/company/services');
+
+export const fetchServiceDetail = (slug) =>
+  request(`/api/company/services/${slug}`);
+
+export const fetchProjects = (params = {}) => {
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([key, val]) => {
+    if (val !== undefined && val !== null && val !== '') {
+      query.append(key, val);
+    }
+  });
+  const qs = query.toString();
+  return request(`/api/company/projects${qs ? `?${qs}` : ''}`);
+};
+
+export const fetchProjectDetail = (id_or_slug) =>
+  request(`/api/company/projects/${id_or_slug}`);
+
+export const fetchTechnologies = (params = {}) => {
+  const query = new URLSearchParams();
+  if (params.category) query.append('category', params.category);
+  const qs = query.toString();
+  return request(`/api/company/technologies${qs ? `?${qs}` : ''}`);
+};
+
+export const fetchTestimonials = () =>
+  request('/api/company/testimonials');
+
+export const fetchTeamMembers = () =>
+  request('/api/company/team');
+
+export const submitProjectInquiry = (payload) =>
+  request('/api/company/inquiries', { method: 'POST', body: payload });
+
+/* --------------------------------------------------------------------------
+   Company & Software Solutions Admin Endpoints
+   -------------------------------------------------------------------------- */
+
+export const fetchCompanyAdminStats = () =>
+  request('/api/admin/company/stats', { auth: true });
+
+export const fetchAdminCompanyProfile = () =>
+  request('/api/admin/company/profile', { auth: true });
+
+export const updateAdminCompanyProfile = (profileData) =>
+  request('/api/admin/company/profile', { method: 'PUT', body: profileData, auth: true });
+
+// Services CMS
+export const fetchAdminServices = () =>
+  request('/api/admin/company/services', { auth: true });
+
+export const createAdminService = (serviceData) =>
+  request('/api/admin/company/services', { method: 'POST', body: serviceData, auth: true });
+
+export const updateAdminService = (id, serviceData) =>
+  request(`/api/admin/company/services/${id}`, { method: 'PUT', body: serviceData, auth: true });
+
+export const deleteAdminService = (id) =>
+  request(`/api/admin/company/services/${id}`, { method: 'DELETE', auth: true });
+
+// Projects CMS
+export const fetchAdminProjects = (params = {}) => {
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([key, val]) => {
+    if (val !== undefined && val !== null && val !== '') {
+      query.append(key, val);
+    }
+  });
+  const qs = query.toString();
+  return request(`/api/admin/company/projects${qs ? `?${qs}` : ''}`, { auth: true });
+};
+
+export const fetchAdminProjectDetail = (id) =>
+  request(`/api/admin/company/projects/${id}`, { auth: true });
+
+export const createAdminProject = (projectData) =>
+  request('/api/admin/company/projects', { method: 'POST', body: projectData, auth: true });
+
+export const updateAdminProject = (id, projectData) =>
+  request(`/api/admin/company/projects/${id}`, { method: 'PUT', body: projectData, auth: true });
+
+export const deleteAdminProject = (id) =>
+  request(`/api/admin/company/projects/${id}`, { method: 'DELETE', auth: true });
+
+export const addAdminProjectImage = (projectId, imageData) =>
+  request(`/api/admin/company/projects/${projectId}/images`, {
+    method: 'POST',
+    body: imageData,
+    auth: true,
+  });
+
+export const deleteAdminProjectImage = (imageId) =>
+  request(`/api/admin/company/projects/images/${imageId}`, {
+    method: 'DELETE',
+    auth: true,
+  });
+
+// Technologies CMS
+export const fetchAdminTechnologies = (params = {}) => {
+  const query = new URLSearchParams();
+  if (params.category) query.append('category', params.category);
+  const qs = query.toString();
+  return request(`/api/admin/company/technologies${qs ? `?${qs}` : ''}`, { auth: true });
+};
+
+export const createAdminTechnology = (techData) =>
+  request('/api/admin/company/technologies', { method: 'POST', body: techData, auth: true });
+
+export const updateAdminTechnology = (id, techData) =>
+  request(`/api/admin/company/technologies/${id}`, { method: 'PUT', body: techData, auth: true });
+
+export const deleteAdminTechnology = (id) =>
+  request(`/api/admin/company/technologies/${id}`, { method: 'DELETE', auth: true });
+
+// Testimonials CMS
+export const fetchAdminTestimonials = () =>
+  request('/api/admin/company/testimonials', { auth: true });
+
+export const createAdminTestimonial = (testimonialData) =>
+  request('/api/admin/company/testimonials', { method: 'POST', body: testimonialData, auth: true });
+
+export const updateAdminTestimonial = (id, testimonialData) =>
+  request(`/api/admin/company/testimonials/${id}`, { method: 'PUT', body: testimonialData, auth: true });
+
+export const deleteAdminTestimonial = (id) =>
+  request(`/api/admin/company/testimonials/${id}`, { method: 'DELETE', auth: true });
+
+// Team Members CMS
+export const fetchAdminTeam = () =>
+  request('/api/admin/company/team', { auth: true });
+
+export const createAdminTeamMember = (memberData) =>
+  request('/api/admin/company/team', { method: 'POST', body: memberData, auth: true });
+
+export const updateAdminTeamMember = (id, memberData) =>
+  request(`/api/admin/company/team/${id}`, { method: 'PUT', body: memberData, auth: true });
+
+export const deleteAdminTeamMember = (id) =>
+  request(`/api/admin/company/team/${id}`, { method: 'DELETE', auth: true });
+
+// Project Inquiries CMS
+export const fetchAdminInquiries = (params = {}) => {
+  const query = new URLSearchParams();
+  Object.entries(params).forEach(([key, val]) => {
+    if (val !== undefined && val !== null && val !== '') {
+      query.append(key, val);
+    }
+  });
+  const qs = query.toString();
+  return request(`/api/admin/company/inquiries${qs ? `?${qs}` : ''}`, { auth: true });
+};
+
+export const fetchAdminInquiryDetail = (id) =>
+  request(`/api/admin/company/inquiries/${id}`, { auth: true });
+
+export const updateAdminInquiry = (id, updateData) =>
+  request(`/api/admin/company/inquiries/${id}`, { method: 'PATCH', body: updateData, auth: true });
+
+export const deleteAdminInquiry = (id) =>
+  request(`/api/admin/company/inquiries/${id}`, { method: 'DELETE', auth: true });
+
+// Media & Asset Uploads
+export const fetchAdminMedia = () =>
+  request('/api/admin/company/media', { auth: true });
+
+export const uploadProjectImageFile = (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  return request('/api/uploads/project-image', { method: 'POST', body: formData, auth: true, isFormData: true });
+};
+
+export const uploadServiceIconFile = (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  return request('/api/uploads/service-icon', { method: 'POST', body: formData, auth: true, isFormData: true });
+};
+
+export const uploadTeamPhotoFile = (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  return request('/api/uploads/team-photo', { method: 'POST', body: formData, auth: true, isFormData: true });
+};
+
+/* --------------------------------------------------------------------------
    Admin APIs
    -------------------------------------------------------------------------- */
 

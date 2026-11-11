@@ -10,31 +10,31 @@ import Layout from './components/layout/Layout';
 import AdminLayout from './components/layout/AdminLayout';
 import ScrollToTop from './components/layout/ScrollToTop';
 
-// Candidate & Public Pages
+// Software Solutions Public Pages
 import Home from './pages/Home';
-import BrowseJobs from './pages/BrowseJobs';
-import JobDetails from './pages/JobDetails';
-import ApplyJob from './pages/ApplyJob';
+import About from './pages/About';
+import Services from './pages/Services';
+import Projects from './pages/Projects';
+import ProjectDetails from './pages/ProjectDetails';
+import Contact from './pages/Contact';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import UserProfile from './pages/UserProfile';
 import EditProfile from './pages/EditProfile';
 import ChangePassword from './pages/ChangePassword';
-import MyApplications from './pages/MyApplications';
-import ApplicationDetails from './pages/ApplicationDetails';
-import SavedJobs from './pages/SavedJobs';
-import About from './pages/About';
-import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 
-// Administration Pages
+// Company CMS Administration Pages
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
-import ManageJobs from './pages/admin/ManageJobs';
-import JobForm from './pages/admin/JobForm';
-import ManageApplicants from './pages/admin/ManageApplicants';
-import ManageUsers from './pages/admin/ManageUsers';
-import ManageCategories from './pages/admin/ManageCategories';
+import AdminCompanyProfile from './pages/admin/AdminCompanyProfile';
+import ManageServices from './pages/admin/ManageServices';
+import ManageProjects from './pages/admin/ManageProjects';
+import ProjectForm from './pages/admin/ProjectForm';
+import ManageTechnologies from './pages/admin/ManageTechnologies';
+import ManageTestimonials from './pages/admin/ManageTestimonials';
+import ManageTeam from './pages/admin/ManageTeam';
+import ManageInquiries from './pages/admin/ManageInquiries';
 import AdminSettings from './pages/admin/AdminSettings';
 
 import './styles/index.css';
@@ -46,104 +46,76 @@ function App() {
         <AuthProvider>
           <ScrollToTop />
           <Routes>
-          {/* Public & Candidate Experience */}
-          <Route element={<Layout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/jobs" element={<BrowseJobs />} />
-            <Route path="/jobs/:id" element={<JobDetails />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            {/* Public Software Company Website */}
+            <Route element={<Layout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/projects" element={<Projects />} />
+              <Route path="/projects/:id" element={<ProjectDetails />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-            {/* Candidate Protected Routes */}
-            <Route
-              path="/jobs/:id/apply"
-              element={
-                <ProtectedRoute>
-                  <ApplyJob />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <UserProfile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile/edit"
-              element={
-                <ProtectedRoute>
-                  <EditProfile />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile/change-password"
-              element={
-                <ProtectedRoute>
-                  <ChangePassword />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/my-applications"
-              element={
-                <ProtectedRoute>
-                  <MyApplications />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/applications/:id"
-              element={
-                <ProtectedRoute>
-                  <ApplicationDetails />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/saved-jobs"
-              element={
-                <ProtectedRoute>
-                  <SavedJobs />
-                </ProtectedRoute>
-              }
-            />
+              {/* Client / User Profile Routes */}
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <UserProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile/edit"
+                element={
+                  <ProtectedRoute>
+                    <EditProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile/change-password"
+                element={
+                  <ProtectedRoute>
+                    <ChangePassword />
+                  </ProtectedRoute>
+                }
+              />
 
-            {/* Catch-all 404 */}
-            <Route path="*" element={<NotFound />} />
-          </Route>
+              {/* Catch-all 404 */}
+              <Route path="*" element={<NotFound />} />
+            </Route>
 
-          {/* Dedicated Admin Login */}
-          <Route path="/admin/login" element={<AdminLogin />} />
+            {/* Dedicated Admin Login */}
+            <Route path="/admin/login" element={<AdminLogin />} />
 
-          {/* Admin Management Console */}
-          <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminLayout />
-              </AdminRoute>
-            }
-          >
-            <Route index element={<Navigate to="/admin/dashboard" replace />} />
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="jobs" element={<ManageJobs />} />
-            <Route path="jobs/new" element={<JobForm />} />
-            <Route path="jobs/:id/edit" element={<JobForm />} />
-            <Route path="applicants" element={<ManageApplicants />} />
-            <Route path="users" element={<ManageUsers />} />
-            <Route path="categories" element={<ManageCategories />} />
-            <Route path="settings" element={<AdminSettings />} />
-          </Route>
-        </Routes>
-      </AuthProvider>
-    </BrandingProvider>
-  </BrowserRouter>
+            {/* Executive Company CMS Console */}
+            <Route
+              path="/admin"
+              element={
+                <AdminRoute>
+                  <AdminLayout />
+                </AdminRoute>
+              }
+            >
+              <Route index element={<Navigate to="/admin/dashboard" replace />} />
+              <Route path="dashboard" element={<AdminDashboard />} />
+              <Route path="company-profile" element={<AdminCompanyProfile />} />
+              <Route path="services" element={<ManageServices />} />
+              <Route path="projects" element={<ManageProjects />} />
+              <Route path="projects/new" element={<ProjectForm />} />
+              <Route path="projects/:id/edit" element={<ProjectForm />} />
+              <Route path="technologies" element={<ManageTechnologies />} />
+              <Route path="testimonials" element={<ManageTestimonials />} />
+              <Route path="team" element={<ManageTeam />} />
+              <Route path="inquiries" element={<ManageInquiries />} />
+              <Route path="settings" element={<AdminSettings />} />
+            </Route>
+          </Routes>
+        </AuthProvider>
+      </BrandingProvider>
+    </BrowserRouter>
   );
 }
 

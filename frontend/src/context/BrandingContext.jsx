@@ -5,11 +5,11 @@ const DEFAULT_BRANDING = {
   platform_name: 'Infovet',
   platform_logo_url: null,
   favicon_url: null,
-  tagline: 'Professional Career Portal',
+  tagline: 'Software Development & IT Solutions',
   primary_color: '#6025C5',
   secondary_color: '#F8F7FC',
   background_color: '#F8F7FC',
-  support_email: 'support@infovet.io',
+  support_email: 'contact@infovet.in',
   contact_phone: null,
 };
 

@@ -1,12 +1,7 @@
 """
-Configurable file storage service for resumes, avatars, and attachments.
-
-Keeps storage provider independent from business logic.
-Files are validated by size, extension, and content type, stored on disk or
-cloud storage, and relative accessible URLs are returned to be saved in the database.
+Configurable file storage service for software portfolio assets, project images, team photos, and inquiry attachments.
 """
 
-import os
 from pathlib import Path
 import re
 import secrets
@@ -17,21 +12,8 @@ from fastapi import HTTPException, UploadFile, status
 
 from app.config import settings
 
-ALLOWED_RESUME_EXTENSIONS: Set[str] = {".pdf", ".doc", ".docx"}
+ALLOWED_DOC_EXTENSIONS: Set[str] = {".pdf", ".doc", ".docx", ".zip"}
 ALLOWED_IMAGE_EXTENSIONS: Set[str] = {".jpg", ".jpeg", ".png", ".webp", ".svg"}
-
-ALLOWED_RESUME_MIMES: Set[str] = {
-    "application/pdf",
-    "application/msword",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "application/octet-stream",
-}
-ALLOWED_IMAGE_MIMES: Set[str] = {
-    "image/jpeg",
-    "image/png",
-    "image/webp",
-    "image/svg+xml",
-}
 
 
 class StorageService:
@@ -40,113 +22,117 @@ class StorageService:
         self.resumes_dir = self.base_dir / "resumes"
         self.avatars_dir = self.base_dir / "avatars"
         self.logos_dir = self.base_dir / "logos"
+        self.projects_dir = self.base_dir / "projects"
+        self.services_dir = self.base_dir / "services"
+        self.team_dir = self.base_dir / "team"
+        self.media_dir = self.base_dir / "media"
+        self.attachments_dir = self.base_dir / "attachments"
         self._ensure_dirs()
 
     def _ensure_dirs(self) -> None:
-        self.resumes_dir.mkdir(parents=True, exist_ok=True)
-        self.avatars_dir.mkdir(parents=True, exist_ok=True)
-        self.logos_dir.mkdir(parents=True, exist_ok=True)
+        for d in [
+            self.resumes_dir,
+            self.avatars_dir,
+            self.logos_dir,
+            self.projects_dir,
+            self.services_dir,
+            self.team_dir,
+            self.media_dir,
+            self.attachments_dir,
+        ]:
+            d.mkdir(parents=True, exist_ok=True)
 
     @staticmethod
     def _sanitize_extension(filename: str) -> str:
         ext = Path(filename).suffix.lower()
-        # Only allow alphanumeric extensions with leading dot
         if not re.match(r"^\.[a-z0-9]{1,10}$", ext):
             return ""
         return ext
 
-    async def save_resume(self, file: UploadFile) -> str:
-        """Validates and saves a candidate resume, returning its accessible URL."""
-        if not file.filename:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Resume file is missing.",
-            )
-
-        ext = self._sanitize_extension(file.filename)
-        if ext not in ALLOWED_RESUME_EXTENSIONS:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Invalid file type '{ext}'. Allowed resume formats are PDF, DOC, and DOCX.",
-            )
-
-        content = await file.read()
-        max_bytes = settings.max_upload_size_mb * 1024 * 1024
-        if len(content) > max_bytes:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"File exceeds maximum allowed size of {settings.max_upload_size_mb}MB.",
-            )
-
-        unique_name = f"resume_{uuid.uuid4().hex[:12]}_{secrets.token_hex(4)}{ext}"
-        destination = self.resumes_dir / unique_name
-
-        with open(destination, "wb") as f:
-            f.write(content)
-
-        return f"/api/uploads/resumes/{unique_name}"
-
-    async def save_avatar(self, file: UploadFile) -> str:
-        """Validates and saves a user avatar/profile picture, returning its accessible URL."""
+    async def _save_image(self, file: UploadFile, target_dir: Path, prefix: str, max_mb: int = 10) -> str:
         if not file.filename:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Image file is missing.",
             )
-
         ext = self._sanitize_extension(file.filename)
         if ext not in ALLOWED_IMAGE_EXTENSIONS:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Invalid image type '{ext}'. Allowed formats are JPG, PNG, WEBP, and SVG.",
+                detail=f"Invalid image type '{ext}'. Allowed formats are PNG, JPG, JPEG, WEBP, and SVG.",
             )
-
         content = await file.read()
-        max_bytes = 5 * 1024 * 1024  # 5MB for profile pictures
+        max_bytes = max_mb * 1024 * 1024
         if len(content) > max_bytes:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Profile picture exceeds 5MB limit.",
+                detail=f"File exceeds maximum allowed size of {max_mb}MB.",
             )
-
-        unique_name = f"avatar_{uuid.uuid4().hex[:12]}_{secrets.token_hex(4)}{ext}"
-        destination = self.avatars_dir / unique_name
-
+        unique_name = f"{prefix}_{uuid.uuid4().hex[:12]}_{secrets.token_hex(4)}{ext}"
+        destination = target_dir / unique_name
         with open(destination, "wb") as f:
             f.write(content)
+        return unique_name
 
-        return f"/api/uploads/avatars/{unique_name}"
+    async def save_resume(self, file: UploadFile) -> str:
+        if not file.filename:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="File is missing.")
+        ext = self._sanitize_extension(file.filename)
+        if ext not in ALLOWED_DOC_EXTENSIONS:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid file type '{ext}'.")
+        content = await file.read()
+        unique_name = f"resume_{uuid.uuid4().hex[:12]}_{secrets.token_hex(4)}{ext}"
+        destination = self.resumes_dir / unique_name
+        with open(destination, "wb") as f:
+            f.write(content)
+        return f"/api/uploads/resumes/{unique_name}"
+
+    async def save_avatar(self, file: UploadFile) -> str:
+        name = await self._save_image(file, self.avatars_dir, "avatar", max_mb=5)
+        return f"/api/uploads/avatars/{name}"
 
     async def save_logo(self, file: UploadFile) -> str:
-        """Validates and saves a platform branding logo, returning its accessible URL."""
+        name = await self._save_image(file, self.logos_dir, "logo", max_mb=5)
+        return f"/api/uploads/logos/{name}"
+
+    async def save_project_image(self, file: UploadFile) -> str:
+        name = await self._save_image(file, self.projects_dir, "project", max_mb=10)
+        return f"/api/uploads/projects/{name}"
+
+    async def save_service_image(self, file: UploadFile) -> str:
+        name = await self._save_image(file, self.services_dir, "service", max_mb=5)
+        return f"/api/uploads/services/{name}"
+
+    async def save_team_photo(self, file: UploadFile) -> str:
+        name = await self._save_image(file, self.team_dir, "team", max_mb=5)
+        return f"/api/uploads/team/{name}"
+
+    async def save_media(self, file: UploadFile) -> tuple[str, str, int]:
+        """Saves media and returns (url, filename, size_bytes)."""
         if not file.filename:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Logo image file is missing.",
-            )
-
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="File is missing.")
         ext = self._sanitize_extension(file.filename)
-        if ext not in ALLOWED_IMAGE_EXTENSIONS:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=f"Invalid logo image type '{ext}'. Allowed formats are PNG, JPG, JPEG, WEBP, and SVG.",
-            )
-
+        if ext not in ALLOWED_IMAGE_EXTENSIONS and ext not in ALLOWED_DOC_EXTENSIONS:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Unsupported file format '{ext}'.")
         content = await file.read()
-        max_bytes = 5 * 1024 * 1024  # 5MB for logo
-        if len(content) > max_bytes:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Logo image exceeds 5MB limit.",
-            )
-
-        unique_name = f"logo_{uuid.uuid4().hex[:12]}_{secrets.token_hex(4)}{ext}"
-        destination = self.logos_dir / unique_name
-
+        unique_name = f"media_{uuid.uuid4().hex[:12]}_{secrets.token_hex(4)}{ext}"
+        destination = self.media_dir / unique_name
         with open(destination, "wb") as f:
             f.write(content)
+        return f"/api/uploads/media/{unique_name}", unique_name, len(content)
 
-        return f"/api/uploads/logos/{unique_name}"
+    async def save_attachment(self, file: UploadFile) -> str:
+        if not file.filename:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="File is missing.")
+        ext = self._sanitize_extension(file.filename)
+        if ext not in ALLOWED_DOC_EXTENSIONS and ext not in ALLOWED_IMAGE_EXTENSIONS:
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=f"Invalid attachment type '{ext}'.")
+        content = await file.read()
+        unique_name = f"inquiry_{uuid.uuid4().hex[:12]}_{secrets.token_hex(4)}{ext}"
+        destination = self.attachments_dir / unique_name
+        with open(destination, "wb") as f:
+            f.write(content)
+        return f"/api/uploads/attachments/{unique_name}"
 
 
 storage_service = StorageService()

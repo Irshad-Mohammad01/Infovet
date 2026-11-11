@@ -460,6 +460,14 @@ input::placeholder, textarea::placeholder {
   box-shadow: var(--shadow-md);
 }
 
+.feature-card h3 {
+  color: #FFFFFF !important;
+}
+
+.feature-card p {
+  color: #D1C5DF;
+}
+
 .badge {
   display: inline-flex;
   align-items: center;

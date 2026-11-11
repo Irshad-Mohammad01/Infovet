@@ -94,10 +94,22 @@ const Navbar = () => {
             Home
           </NavLink>
           <NavLink
-            to="/jobs"
+            to="/about"
             className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
           >
-            Browse Jobs
+            About Us
+          </NavLink>
+          <NavLink
+            to="/services"
+            className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
+          >
+            Services
+          </NavLink>
+          <NavLink
+            to="/projects"
+            className={({ isActive }) => `nav-link ${isActive ? 'is-active' : ''}`}
+          >
+            Our Projects
           </NavLink>
           <NavLink
             to="/contact"
@@ -107,108 +119,99 @@ const Navbar = () => {
           </NavLink>
         </nav>
 
-        {/* Right Column: User Profile Dropdown or Auth Buttons */}
+        {/* Right Column: User Profile Dropdown or Actions */}
         <div className="header-actions-col">
           {isAuthenticated ? (
-            <div className="user-dropdown" ref={dropdownRef}>
-              <button
-                type="button"
-                className="user-menu-btn"
-                onClick={() => setDropdownOpen((prev) => !prev)}
-                aria-expanded={dropdownOpen}
-                aria-label="User navigation menu"
-              >
-                <div className="user-avatar-circle">{userInitial}</div>
-                <span className="user-menu-label">{userShortName}</span>
-                <ChevronDown size={14} className="user-chevron" />
-              </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <Link to="/contact" className="btn btn-primary btn-sm" style={{ display: 'none', '@media (min-width: 640px)': { display: 'inline-flex' } }}>
+                Get a Quote
+              </Link>
+              <div className="user-dropdown" ref={dropdownRef}>
+                <button
+                  type="button"
+                  className="user-menu-btn"
+                  onClick={() => setDropdownOpen((prev) => !prev)}
+                  aria-expanded={dropdownOpen}
+                  aria-label="User navigation menu"
+                >
+                  <div className="user-avatar-circle">{userInitial}</div>
+                  <span className="user-menu-label">{userShortName}</span>
+                  <ChevronDown size={14} className="user-chevron" />
+                </button>
 
-              {dropdownOpen && (
-                <div className="user-menu-dropdown">
-                  <div className="user-menu-header">
-                    <p className="user-menu-name">{user.full_name}</p>
-                    <p className="user-menu-email">{user.email}</p>
-                    {isAdminUser && (
-                      <span
-                        style={{
-                          display: 'inline-block',
-                          fontSize: '0.65rem',
-                          fontWeight: 700,
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.05em',
-                          color: 'var(--primary)',
-                          backgroundColor: 'var(--primary-light)',
-                          padding: '0.1rem 0.5rem',
-                          borderRadius: '999px',
-                          marginTop: '0.35rem',
-                        }}
-                      >
-                        Administrator
-                      </span>
+                {dropdownOpen && (
+                  <div className="user-menu-dropdown">
+                    <div className="user-menu-header">
+                      <p className="user-menu-name">{user.full_name}</p>
+                      <p className="user-menu-email">{user.email}</p>
+                      {isAdminUser && (
+                        <span
+                          style={{
+                            display: 'inline-block',
+                            fontSize: '0.65rem',
+                            fontWeight: 700,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.05em',
+                            color: 'var(--primary)',
+                            backgroundColor: 'var(--primary-light)',
+                            padding: '0.1rem 0.5rem',
+                            borderRadius: '999px',
+                            marginTop: '0.35rem',
+                          }}
+                        >
+                          Administrator
+                        </span>
+                      )}
+                    </div>
+
+                    {isAdminUser ? (
+                      /* ADMIN USERS: Admin Portal + Sign Out ONLY */
+                      <>
+                        <Link
+                          to="/admin/dashboard"
+                          className="user-menu-item user-menu-admin-link"
+                          onClick={handleItemClick}
+                        >
+                          <Shield size={16} /> Admin Portal
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={handleLogout}
+                          className="user-menu-item user-menu-logout-btn"
+                        >
+                          <LogOut size={16} /> Sign Out
+                        </button>
+                      </>
+                    ) : (
+                      /* REGISTERED USERS: My Profile + Sign Out */
+                      <>
+                        <Link
+                          to="/profile"
+                          className="user-menu-item"
+                          onClick={handleItemClick}
+                        >
+                          <UserIcon size={16} /> My Profile
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={handleLogout}
+                          className="user-menu-item user-menu-logout-btn"
+                        >
+                          <LogOut size={16} /> Sign Out
+                        </button>
+                      </>
                     )}
                   </div>
-
-                  {isAdminUser ? (
-                    /* ADMIN USERS: Admin Portal + Sign Out ONLY */
-                    <>
-                      <Link
-                        to="/admin/dashboard"
-                        className="user-menu-item user-menu-admin-link"
-                        onClick={handleItemClick}
-                      >
-                        <Shield size={16} /> Admin Portal
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={handleLogout}
-                        className="user-menu-item user-menu-logout-btn"
-                      >
-                        <LogOut size={16} /> Sign Out
-                      </button>
-                    </>
-                  ) : (
-                    /* CUSTOMER / JOB SEEKER USERS: My Profile + My Applications + Saved Jobs + Sign Out ONLY */
-                    <>
-                      <Link
-                        to="/profile"
-                        className="user-menu-item"
-                        onClick={handleItemClick}
-                      >
-                        <UserIcon size={16} /> My Profile
-                      </Link>
-                      <Link
-                        to="/my-applications"
-                        className="user-menu-item"
-                        onClick={handleItemClick}
-                      >
-                        <FileText size={16} /> My Applications
-                      </Link>
-                      <Link
-                        to="/saved-jobs"
-                        className="user-menu-item"
-                        onClick={handleItemClick}
-                      >
-                        <Bookmark size={16} /> Saved Jobs
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={handleLogout}
-                        className="user-menu-item user-menu-logout-btn"
-                      >
-                        <LogOut size={16} /> Sign Out
-                      </button>
-                    </>
-                  )}
-                </div>
-              )}
+                )}
+              </div>
             </div>
           ) : (
             <div className="header-auth-buttons">
               <Link to="/login" className="btn btn-ghost btn-sm">
                 Sign In
               </Link>
-              <Link to="/register" className="btn btn-primary btn-sm">
-                Create Account
+              <Link to="/contact" className="btn btn-primary btn-sm">
+                Get a Quote
               </Link>
             </div>
           )}
@@ -231,41 +234,31 @@ const Navbar = () => {
           <NavLink to="/" end className="mobile-nav-link" onClick={handleItemClick}>
             Home
           </NavLink>
-          <NavLink to="/jobs" className="mobile-nav-link" onClick={handleItemClick}>
-            Browse Jobs
+          <NavLink to="/about" className="mobile-nav-link" onClick={handleItemClick}>
+            About Us
+          </NavLink>
+          <NavLink to="/services" className="mobile-nav-link" onClick={handleItemClick}>
+            Services
+          </NavLink>
+          <NavLink to="/projects" className="mobile-nav-link" onClick={handleItemClick}>
+            Our Projects
           </NavLink>
           <NavLink to="/contact" className="mobile-nav-link" onClick={handleItemClick}>
             Contact Us
           </NavLink>
 
-          {isAuthenticated ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', marginTop: '1rem' }}>
-              <div style={{ padding: '0.75rem 0', borderBottom: '1px solid var(--border-light)' }}>
-                <p style={{ fontWeight: 700, margin: 0, fontSize: '0.9375rem' }}>{user.full_name}</p>
-                <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0' }}>{user.email}</p>
-                {isAdminUser && (
-                  <span
-                    style={{
-                      display: 'inline-block',
-                      fontSize: '0.65rem',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.05em',
-                      color: 'var(--primary)',
-                      backgroundColor: 'var(--primary-light)',
-                      padding: '0.1rem 0.5rem',
-                      borderRadius: '999px',
-                      marginTop: '0.35rem',
-                    }}
-                  >
-                    Administrator
-                  </span>
-                )}
-              </div>
+          <div style={{ marginTop: '1rem', borderTop: '1px solid var(--border-light)', paddingTop: '1rem' }}>
+            <Link to="/contact" className="btn btn-primary btn-block" onClick={handleItemClick} style={{ marginBottom: '0.75rem' }}>
+              Get a Quote
+            </Link>
 
-              {isAdminUser ? (
-                /* ADMIN USERS: Admin Portal + Sign Out ONLY */
-                <>
+            {isAuthenticated ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                <div style={{ padding: '0.5rem 0' }}>
+                  <p style={{ fontWeight: 700, margin: 0, fontSize: '0.9375rem' }}>{user.full_name}</p>
+                  <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0' }}>{user.email}</p>
+                </div>
+                {isAdminUser && (
                   <Link
                     to="/admin/dashboard"
                     className="btn btn-outline btn-block"
@@ -273,58 +266,21 @@ const Navbar = () => {
                   >
                     <Shield size={16} /> Admin Portal
                   </Link>
-                  <button
-                    type="button"
-                    onClick={handleLogout}
-                    className="btn btn-danger-outline btn-block"
-                  >
-                    <LogOut size={16} /> Sign Out
-                  </button>
-                </>
-              ) : (
-                /* CUSTOMER / JOB SEEKER USERS: My Profile + My Applications + Saved Jobs + Sign Out ONLY */
-                <>
-                  <Link
-                    to="/profile"
-                    className="btn btn-secondary btn-block"
-                    onClick={handleItemClick}
-                  >
-                    <UserIcon size={16} /> My Profile
-                  </Link>
-                  <Link
-                    to="/my-applications"
-                    className="btn btn-secondary btn-block"
-                    onClick={handleItemClick}
-                  >
-                    <FileText size={16} /> My Applications
-                  </Link>
-                  <Link
-                    to="/saved-jobs"
-                    className="btn btn-secondary btn-block"
-                    onClick={handleItemClick}
-                  >
-                    <Bookmark size={16} /> Saved Jobs
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={handleLogout}
-                    className="btn btn-danger-outline btn-block"
-                  >
-                    <LogOut size={16} /> Sign Out
-                  </button>
-                </>
-              )}
-            </div>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem' }}>
+                )}
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="btn btn-danger-outline btn-block"
+                >
+                  <LogOut size={16} /> Sign Out
+                </button>
+              </div>
+            ) : (
               <Link to="/login" className="btn btn-secondary btn-block" onClick={handleItemClick}>
                 Sign In
               </Link>
-              <Link to="/register" className="btn btn-primary btn-block" onClick={handleItemClick}>
-                Create Account
-              </Link>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
     </header>

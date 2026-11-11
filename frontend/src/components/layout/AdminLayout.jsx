@@ -2,25 +2,26 @@ import React, { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
-  Briefcase,
-  PlusCircle,
+  Building2,
+  Layers,
+  FolderGit2,
+  Cpu,
+  MessageSquare,
   Users,
-  UserCheck,
-  FolderTree,
+  Inbox,
   Settings,
   LogOut,
   ExternalLink,
   Menu,
   X,
   Shield,
-  Activity,
 } from 'lucide-react';
 import Logo from '../ui/Logo';
 import { useAuth } from '../../context/AuthContext';
 import { useBranding } from '../../context/BrandingContext';
 
 /**
- * Dedicated Executive Administration Layout.
+ * Dedicated Executive Administration Layout for INFOVET Software Solutions.
  * Features a distinct dark command sidebar (#130D24) paired with a high-visibility topbar
  * and clean data-table friendly content workspace.
  */
@@ -37,11 +38,13 @@ const AdminLayout = () => {
 
   const navItems = [
     { label: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
-    { label: 'Manage Jobs', path: '/admin/jobs', icon: Briefcase },
-    { label: 'Post New Job', path: '/admin/jobs/new', icon: PlusCircle },
-    { label: 'Applicants', path: '/admin/applicants', icon: Users },
-    { label: 'Users', path: '/admin/users', icon: UserCheck },
-    { label: 'Categories', path: '/admin/categories', icon: FolderTree },
+    { label: 'Company Profile', path: '/admin/company-profile', icon: Building2 },
+    { label: 'Services', path: '/admin/services', icon: Layers },
+    { label: 'Projects / Portfolio', path: '/admin/projects', icon: FolderGit2 },
+    { label: 'Technologies', path: '/admin/technologies', icon: Cpu },
+    { label: 'Client Testimonials', path: '/admin/testimonials', icon: MessageSquare },
+    { label: 'Team Members', path: '/admin/team', icon: Users },
+    { label: 'Project Inquiries', path: '/admin/inquiries', icon: Inbox },
     { label: 'Settings & Branding', path: '/admin/settings', icon: Settings },
   ];
 
@@ -201,7 +204,7 @@ const AdminLayout = () => {
                 }}
               >
                 <ExternalLink size={17} />
-                <span>Live Candidate Portal</span>
+                <span>Live Website</span>
               </a>
             </li>
           </ul>
