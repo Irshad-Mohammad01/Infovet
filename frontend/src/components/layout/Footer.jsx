@@ -14,10 +14,11 @@ const Footer = () => {
   return (
     <footer className="site-footer">
       <div className="container footer-inner">
+        {/* Brand Column */}
         <div className="footer-brand">
           <Logo size={32} withWordmark />
           <p style={{ marginTop: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: '340px' }}>
-            We engineer enterprise-grade web applications, mobile apps, and scalable digital solutions tailored to your business vision.
+            We engineer enterprise-grade web applications, mobile apps, and scalable digital solutions tailored to modern business visions.
           </p>
 
           <div style={{ marginTop: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
@@ -42,67 +43,36 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Quick Links Column */}
         <div>
-          <h4 className="footer-col-title">Our Services</h4>
+          <h4 className="footer-col-title">Quick Navigation</h4>
           <ul className="footer-list">
             <li>
-              <Link to="/services">Custom Software Development</Link>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/services">Web Application Engineering</Link>
+              <Link to="/about">About Us</Link>
             </li>
             <li>
-              <Link to="/services">Mobile App Development</Link>
-            </li>
-            <li>
-              <Link to="/services">Cloud & DevOps Solutions</Link>
-            </li>
-            <li>
-              <Link to="/services">AI & Automation</Link>
-            </li>
-            <li>
-              <Link to="/services">UI/UX & Product Design</Link>
+              <Link to="/contact">Contact Us</Link>
             </li>
           </ul>
         </div>
 
+        {/* Start a Conversation Column */}
         <div>
-          <h4 className="footer-col-title">Company</h4>
-          <ul className="footer-list">
-            <li>
-              <Link to="/about">About INFOVET</Link>
-            </li>
-            <li>
-              <Link to="/projects">Featured Projects</Link>
-            </li>
-            <li>
-              <Link to="/about#team">Engineering Team</Link>
-            </li>
-            <li>
-              <Link to="/contact">Get a Free Quote</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact & Support</Link>
-            </li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="footer-col-title">Portals & Links</h4>
-          <ul className="footer-list">
-            <li>
-              <Link to="/contact">Start a Project</Link>
-            </li>
-            <li>
-              <Link to="/login">Client Portal</Link>
-            </li>
-            <li>
-              <Link to="/admin/login">Admin Console</Link>
-            </li>
-            <li>
-              <Link to="/privacy-policy">Privacy & Security</Link>
-            </li>
-          </ul>
+          <h4 className="footer-col-title">Start a Project</h4>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: 1.6, marginBottom: '1rem' }}>
+            Have a product vision or engineering challenge? Tell us about your goals and receive a technical proposal within 24 hours.
+          </p>
+          <Link
+            to="/contact"
+            className="btn btn-primary btn-sm"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
+          >
+            <span>Discuss Your Project</span>
+            <ArrowRight size={14} />
+          </Link>
         </div>
       </div>
 

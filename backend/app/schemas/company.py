@@ -4,7 +4,7 @@ Pydantic schemas for INFOVET Software Development Company website and admin cons
 
 from datetime import date, datetime
 from typing import Any, List, Optional
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, model_validator
 
 
 # ---------------------------------------------------------------------------
@@ -275,38 +275,146 @@ class TeamMemberOut(TeamMemberBase):
 # Project Inquiry
 # ---------------------------------------------------------------------------
 class ProjectInquiryCreate(BaseModel):
-    full_name: str = Field(..., min_length=2, max_length=150)
-    email: EmailStr = Field(...)
+    full_name: Optional[str] = None
+    client_name: Optional[str] = None
+    name: Optional[str] = None
+    email: EmailStr
     phone: Optional[str] = Field(default=None, max_length=50)
+    company: Optional[str] = Field(default=None, max_length=150)
     company_name: Optional[str] = Field(default=None, max_length=150)
-    project_type: str = Field(default="Custom Web Application", max_length=100)
+    inquiry_type: str = Field(default="project", max_length=50)
+    project_type: Optional[str] = Field(default=None, max_length=100)
     estimated_budget: Optional[str] = Field(default=None, max_length=100)
+    budget_range: Optional[str] = Field(default=None, max_length=100)
+    timeline: Optional[str] = Field(default=None, max_length=100)
     expected_timeline: Optional[str] = Field(default=None, max_length=100)
-    project_description: str = Field(..., min_length=10)
+    project_description: Optional[str] = None
+    description: Optional[str] = None
+    subject: Optional[str] = Field(default=None, max_length=255)
+    message: Optional[str] = None
     attachment_url: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_fields(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if not data.get("full_name"):
+                data["full_name"] = data.get("client_name") or data.get("name")
+            if not data.get("company"):
+                data["company"] = data.get("company_name")
+            elif not data.get("company_name"):
+                data["company_name"] = data.get("company")
+            if not data.get("timeline"):
+                data["timeline"] = data.get("expected_timeline")
+            elif not data.get("expected_timeline"):
+                data["expected_timeline"] = data.get("timeline")
+            if not data.get("estimated_budget"):
+                data["estimated_budget"] = data.get("budget_range")
+            elif not data.get("budget_range"):
+                data["budget_range"] = data.get("estimated_budget")
+            if not data.get("project_description"):
+                data["project_description"] = data.get("description") or data.get("message")
+            if not data.get("message"):
+                data["message"] = data.get("project_description") or data.get("description")
+            inq_type = str(data.get("inquiry_type") or "project").lower()
+            if inq_type == "general":
+                if not data.get("project_type"):
+                    data["project_type"] = "General Inquiry"
+            else:
+                if not data.get("project_type"):
+                    data["project_type"] = "Custom Web Application"
+        return data
+
+    @model_validator(mode="after")
+    def validate_content(self) -> "ProjectInquiryCreate":
+        if not self.full_name or len(self.full_name.strip()) < 2:
+            raise ValueError("Full name is required (minimum 2 characters).")
+        has_content = bool(
+            (self.project_description and self.project_description.strip())
+            or (self.message and self.message.strip())
+            or (self.subject and self.subject.strip())
+        )
+        if not has_content:
+            raise ValueError("Please provide a project description or message.")
+        return self
 
 
 class ProjectInquiryUpdateAdmin(BaseModel):
     status: Optional[str] = Field(default=None, max_length=50)
     internal_notes: Optional[str] = None
+    admin_notes: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_admin_fields(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if not data.get("internal_notes") and data.get("admin_notes"):
+                data["internal_notes"] = data.get("admin_notes")
+        return data
 
 
 class ProjectInquiryOut(BaseModel):
     id: int
     full_name: str
+    client_name: Optional[str] = None
     email: EmailStr
     phone: Optional[str] = None
+    company: Optional[str] = None
     company_name: Optional[str] = None
-    project_type: str
+    inquiry_type: str = "project"
+    project_type: Optional[str] = None
     estimated_budget: Optional[str] = None
+    budget_range: Optional[str] = None
+    timeline: Optional[str] = None
     expected_timeline: Optional[str] = None
-    project_description: str
+    project_description: Optional[str] = None
+    description: Optional[str] = None
+    subject: Optional[str] = None
+    message: Optional[str] = None
     attachment_url: Optional[str] = None
-    status: str
+    status: str = "NEW"
     internal_notes: Optional[str] = None
+    admin_notes: Optional[str] = None
     created_at: datetime
     updated_at: datetime
     model_config = ConfigDict(from_attributes=True)
+
+    @model_validator(mode="before")
+    @classmethod
+    def populate_aliases(cls, data: Any) -> Any:
+        if hasattr(data, "full_name"):
+            full_name = getattr(data, "full_name", None)
+            comp = getattr(data, "company", None) or getattr(data, "company_name", None)
+            budg = getattr(data, "estimated_budget", None)
+            time_val = getattr(data, "timeline", None) or getattr(data, "expected_timeline", None)
+            desc = getattr(data, "project_description", None) or getattr(data, "message", None)
+            notes = getattr(data, "internal_notes", None)
+            return {
+                "id": getattr(data, "id"),
+                "full_name": full_name,
+                "client_name": full_name,
+                "email": getattr(data, "email"),
+                "phone": getattr(data, "phone", None),
+                "company": comp,
+                "company_name": comp,
+                "inquiry_type": getattr(data, "inquiry_type", "project") or "project",
+                "project_type": getattr(data, "project_type", None),
+                "estimated_budget": budg,
+                "budget_range": budg,
+                "timeline": time_val,
+                "expected_timeline": time_val,
+                "project_description": desc,
+                "description": desc,
+                "subject": getattr(data, "subject", None),
+                "message": getattr(data, "message", None) or desc,
+                "attachment_url": getattr(data, "attachment_url", None),
+                "status": getattr(data, "status", "NEW"),
+                "internal_notes": notes,
+                "admin_notes": notes,
+                "created_at": getattr(data, "created_at"),
+                "updated_at": getattr(data, "updated_at"),
+            }
+        return data
 
 
 # ---------------------------------------------------------------------------

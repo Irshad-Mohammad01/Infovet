@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Briefcase } from 'lucide-react';
+import { Code2 } from 'lucide-react';
 import { useBranding } from '../../context/BrandingContext';
 import { normalizeImageUrl } from '../../utils/imageUrl';
 
 /**
- * Dynamic Platform Logo & Brand Identifier.
+ * Dynamic Platform Logo & Brand Identifier for INFOVET.
  * Renders the database-configured logo URL from the public settings API.
  * Automatically normalizes Google Drive links and relative paths.
- * If no logo URL is configured or if the image fails to load, displays a neutral generic placeholder.
+ * If no logo URL is configured or if the image fails to load, displays a clean tech icon badge.
  *
  * @param {number} [size=32] - rendered height in px
  * @param {boolean} [withWordmark=false] - render dynamic platform name text alongside the badge
@@ -18,7 +18,7 @@ const Logo = ({ size = 32, withWordmark = false, variant = 'default', className 
   const { branding } = useBranding();
   const isLight = variant === 'light';
 
-  const platformName = branding?.platform_name || 'Job Portal';
+  const platformName = branding?.platform_name || 'INFOVET';
   const rawLogoUrl = branding?.platform_logo_url;
   const logoUrl = normalizeImageUrl(rawLogoUrl);
   const primaryColor = branding?.primary_color || 'var(--primary, #6025C5)';
@@ -61,7 +61,7 @@ const Logo = ({ size = 32, withWordmark = false, variant = 'default', className 
       }}
       aria-hidden="true"
     >
-      <Briefcase size={Math.round(size * 0.52)} />
+      <Code2 size={Math.round(size * 0.52)} />
     </span>
   );
 

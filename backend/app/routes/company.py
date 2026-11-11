@@ -201,15 +201,33 @@ def submit_project_inquiry(
     db: Session = Depends(get_db),
 ) -> ProjectInquiryOut:
     """Submits a project inquiry from a prospective client."""
+    full_name = (payload.full_name or payload.client_name or payload.name or "").strip()
+    company = (payload.company_name or payload.company or "").strip() or None
+    est_budget = (payload.estimated_budget or payload.budget_range or "").strip() or None
+    exp_timeline = (payload.expected_timeline or payload.timeline or "").strip() or None
+    raw_desc = (payload.project_description or payload.description or payload.message or "").strip()
+    subject = (payload.subject or "").strip()
+    if subject and not raw_desc.startswith(f"Subject: {subject}"):
+        proj_desc = f"Subject: {subject}\n\n{raw_desc}"
+    else:
+        proj_desc = raw_desc
+
+    if payload.project_type and payload.project_type.strip():
+        proj_type = payload.project_type.strip()
+    elif subject:
+        proj_type = f"Inquiry: {subject}"
+    else:
+        proj_type = "General Inquiry"
+
     inquiry = ProjectInquiry(
-        full_name=payload.full_name.strip(),
+        full_name=full_name,
         email=payload.email.lower().strip(),
         phone=payload.phone.strip() if payload.phone else None,
-        company_name=payload.company_name.strip() if payload.company_name else None,
-        project_type=payload.project_type.strip(),
-        estimated_budget=payload.estimated_budget.strip() if payload.estimated_budget else None,
-        expected_timeline=payload.expected_timeline.strip() if payload.expected_timeline else None,
-        project_description=payload.project_description.strip(),
+        company_name=company,
+        project_type=proj_type,
+        estimated_budget=est_budget,
+        expected_timeline=exp_timeline,
+        project_description=proj_desc,
         attachment_url=payload.attachment_url,
         status="New",
     )
