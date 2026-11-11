@@ -1,0 +1,42 @@
+# Root .gitignore for Infovet project
+
+# Environments & secrets
+.env
+.env.*
+!.env.example
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+backend/.venv/
+.venv/
+venv/
+ENV/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / Frontend
+node_modules/
+frontend/dist/
+frontend/node_modules/
+.npm
+npm-debug.log*
+
+# Database & local data
+*.db
+*.sqlite3
+*.db-journal
+backend/uploads/
+uploads/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+

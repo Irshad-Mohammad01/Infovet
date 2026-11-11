@@ -1,0 +1,15 @@
+{
+  "short_name": "Infovet",
+  "name": "INFOVET — Professional Job Portal",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#F8F7FC",
+  "theme_color": "#6025C5",
+  "display": "standalone"
+}
