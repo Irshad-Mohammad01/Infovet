@@ -19,7 +19,7 @@ const Logo = ({ size = 32, withWordmark = false, variant = 'default', className 
   const isLight = variant === 'light';
 
   const platformName = branding?.platform_name || 'INFOVATE';
-  const rawLogoUrl = branding?.platform_logo_url;
+  const rawLogoUrl = branding?.platform_logo_url || '/logo/infovate-logo.png';
   const logoUrl = normalizeImageUrl(rawLogoUrl);
   const primaryColor = branding?.primary_color || 'var(--primary, #6025C5)';
   const textColor = isLight ? '#FFFFFF' : 'var(--text, #1F1F1F)';
@@ -31,10 +31,11 @@ const Logo = ({ size = 32, withWordmark = false, variant = 'default', className 
   }, [logoUrl]);
 
   const showImage = Boolean(logoUrl && !hasError);
+  const imageSource = withWordmark ? '/logo/infovate-icon.png' : (logoUrl || '/logo/infovate-logo.png');
 
   const mark = showImage ? (
     <img
-      src={logoUrl}
+      src={imageSource}
       alt={platformName}
       style={{
         height: `${size}px`,

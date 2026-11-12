@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://hexmap.io/</loc>
+    <loc>https://infovate.in/</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://hexmap.io/about</loc>
+    <loc>https://infovate.in/about</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://hexmap.io/contact</loc>
+    <loc>https://infovate.in/contact</loc>
     <priority>0.8</priority>
   </url>
 </urlset>

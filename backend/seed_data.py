@@ -22,7 +22,7 @@ def seed_database():
         print("Starting Infovate database seeding...")
 
         # 1. Seed Admin Users
-        admin_emails = ["admin@infovate.in", "admin@infovate.io", "admin@inofovet.in", "admin@infovet.in", "admin@infovet.io"]
+        admin_emails = ["admin@infovate.in", "admin@infovate.io"]
         for admin_email in admin_emails:
             admin_user = db.query(User).filter(User.email == admin_email).first()
             if not admin_user:
