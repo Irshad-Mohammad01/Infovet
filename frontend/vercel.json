@@ -1,6 +1,18 @@
 {
   "rewrites": [
     {
+      "source": "/api/(.*)",
+      "destination": "https://infovet.onrender.com/api/$1"
+    },
+    {
+      "source": "/inquiries",
+      "destination": "https://infovet.onrender.com/inquiries"
+    },
+    {
+      "source": "/inquiries/",
+      "destination": "https://infovet.onrender.com/inquiries"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

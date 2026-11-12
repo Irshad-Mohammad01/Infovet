@@ -183,3 +183,32 @@ def test_admin_projects_crud_and_inquiries(client, admin_token):
     stats_data = res_stats.json()
     assert stats_data["total_projects"] >= 1
     assert stats_data["total_inquiries"] >= 0
+
+
+def test_all_inquiry_endpoints_and_aliases(client):
+    """Confirm /inquiries, /api/inquiries, /api/company/inquiries with and without trailing slashes return 201."""
+    endpoints = [
+        "/inquiries",
+        "/inquiries/",
+        "/api/inquiries",
+        "/api/inquiries/",
+        "/api/company/inquiries",
+        "/api/company/inquiries/",
+    ]
+    for endpoint in endpoints:
+        payload = {
+            "full_name": f"Tester for {endpoint}",
+            "email": "tester@example.com",
+            "phone": "+91 9876543210",
+            "subject": f"Testing {endpoint}",
+            "message": f"This is an automated test for {endpoint}",
+            "inquiry_type": "general",
+        }
+        res = client.post(endpoint, json=payload)
+        assert res.status_code == 201, f"Failed for {endpoint}: {res.text}"
+        data = res.json()
+        assert data["full_name"] == f"Tester for {endpoint}"
+        assert data["subject"] == f"Testing {endpoint}"
+        assert data["message"] == f"This is an automated test for {endpoint}"
+        assert data["phone"] == "+91 9876543210"
+        assert data["status"] == "New"

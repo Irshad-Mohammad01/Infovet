@@ -44,7 +44,6 @@ const AdminLayout = () => {
     { label: 'Technologies', path: '/admin/technologies', icon: Cpu },
     { label: 'Client Testimonials', path: '/admin/testimonials', icon: MessageSquare },
     { label: 'Team Members', path: '/admin/team', icon: Users },
-    { label: 'Project Inquiries', path: '/admin/inquiries', icon: Inbox },
     { label: 'Settings & Branding', path: '/admin/settings', icon: Settings },
   ];
 

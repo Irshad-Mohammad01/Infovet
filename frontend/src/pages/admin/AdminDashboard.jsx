@@ -84,15 +84,6 @@ const AdminDashboard = () => {
       sub: 'Active business capabilities',
     },
     {
-      label: 'Client Inquiries',
-      value: stats?.total_inquiries ?? 0,
-      icon: Inbox,
-      color: '#16A34A',
-      bg: 'rgba(22, 163, 74, 0.08)',
-      link: '/admin/inquiries',
-      sub: `${stats?.new_inquiries ?? 0} awaiting review`,
-    },
-    {
       label: 'Technologies Stack',
       value: stats?.total_technologies ?? 0,
       icon: Cpu,
@@ -138,10 +129,6 @@ const AdminDashboard = () => {
           <Link to="/admin/projects/new" className="btn btn-primary btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
             <PlusCircle size={15} />
             <span>Add New Project</span>
-          </Link>
-          <Link to="/admin/inquiries" className="btn btn-outline btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-            <Inbox size={15} />
-            <span>View Inquiries</span>
           </Link>
         </div>
       </div>
@@ -220,81 +207,8 @@ const AdminDashboard = () => {
         })}
       </div>
 
-      {/* Two Column Layout: Recent Inquiries & Recent Projects */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(440px, 1fr))',
-          gap: '2rem',
-        }}
-      >
-        {/* Recent Inquiries Panel */}
-        <div className="card" style={{ padding: '1.75rem', border: '1px solid var(--border)', borderRadius: '16px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-            <h2 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text)' }}>
-              Recent Project Inquiries
-            </h2>
-            <Link to="/admin/inquiries" style={{ fontSize: '0.8125rem', color: 'var(--primary)', fontWeight: 600, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-              <span>View All</span>
-              <ArrowRight size={14} />
-            </Link>
-          </div>
-
-          {!stats?.recent_inquiries || stats.recent_inquiries.length === 0 ? (
-            <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', textAlign: 'center', padding: '2rem 0' }}>
-              No project inquiries yet. Submissions from the contact page will appear here.
-            </p>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-              {stats.recent_inquiries.slice(0, 5).map((inq) => {
-                const statusStyle = STATUS_COLORS[inq.status] || STATUS_COLORS.New;
-                return (
-                  <div
-                    key={inq.id}
-                    style={{
-                      padding: '1rem',
-                      borderRadius: '10px',
-                      backgroundColor: 'var(--bg)',
-                      border: '1px solid var(--border)',
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text)' }}>
-                        {inq.client_name} {inq.company ? `(${inq.company})` : ''}
-                      </div>
-                      <div style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
-                        {inq.project_type || 'Software Project'} • {inq.budget_range || 'Flexible'}
-                      </div>
-                    </div>
-                    <div style={{ textAlign: 'right' }}>
-                      <span
-                        style={{
-                          fontSize: '0.725rem',
-                          fontWeight: 700,
-                          padding: '0.2rem 0.6rem',
-                          borderRadius: '999px',
-                          backgroundColor: statusStyle.bg,
-                          color: statusStyle.text,
-                          border: `1px solid ${statusStyle.border}`,
-                        }}
-                      >
-                        {inq.status}
-                      </span>
-                      <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>
-                        {new Date(inq.created_at).toLocaleDateString()}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
-        {/* Recent Projects Panel */}
+      {/* Recent Projects Panel */}
+      <div style={{ marginTop: '1rem' }}>
         <div className="card" style={{ padding: '1.75rem', border: '1px solid var(--border)', borderRadius: '16px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
             <h2 style={{ fontSize: '1.15rem', fontWeight: 700, color: 'var(--text)' }}>

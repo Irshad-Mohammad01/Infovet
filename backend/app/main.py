@@ -29,12 +29,6 @@ from app.schemas.company import (
     ProjectInquiryUpdateAdmin,
 )
 from app.routes.company import submit_project_inquiry
-from app.routes.company_admin import (
-    delete_inquiry,
-    get_inquiry_by_id,
-    list_admin_inquiries,
-    update_inquiry_status,
-)
 from app.routes import (
     admin_router,
     applications_router,
@@ -118,11 +112,14 @@ app.include_router(uploads_router)
 app.include_router(admin_router)
 app.include_router(contact_router)
 
-# Direct aliases for /api/inquiries and /api/admin/inquiries
-inquiry_alias_router = APIRouter(prefix="/api/inquiries", tags=["company"])
+# Universal Inquiry submission endpoints (/inquiries, /inquiries/, /api/inquiries, /api/inquiries/)
+inquiry_alias_router = APIRouter(tags=["company"])
 
 
-@inquiry_alias_router.post("", response_model=ProjectInquiryOut, status_code=status.HTTP_201_CREATED)
+@inquiry_alias_router.post("/inquiries", response_model=ProjectInquiryOut, status_code=status.HTTP_201_CREATED)
+@inquiry_alias_router.post("/inquiries/", response_model=ProjectInquiryOut, status_code=status.HTTP_201_CREATED)
+@inquiry_alias_router.post("/api/inquiries", response_model=ProjectInquiryOut, status_code=status.HTTP_201_CREATED)
+@inquiry_alias_router.post("/api/inquiries/", response_model=ProjectInquiryOut, status_code=status.HTTP_201_CREATED)
 def submit_project_inquiry_alias(
     payload: ProjectInquiryCreate,
     db: Session = Depends(get_db),
@@ -131,48 +128,4 @@ def submit_project_inquiry_alias(
 
 
 app.include_router(inquiry_alias_router)
-
-admin_inquiry_alias_router = APIRouter(prefix="/api/admin/inquiries", tags=["admin-company"])
-
-
-@admin_inquiry_alias_router.get("", response_model=List[ProjectInquiryOut])
-def list_admin_inquiries_alias(
-    status: Optional[str] = Query(None),
-    search: Optional[str] = Query(None),
-    current_admin: User = Depends(get_current_admin),
-    db: Session = Depends(get_db),
-) -> List[ProjectInquiryOut]:
-    return list_admin_inquiries(status_filter=status, search=search, current_admin=current_admin, db=db)
-
-
-@admin_inquiry_alias_router.get("/{inquiry_id}", response_model=ProjectInquiryOut)
-def get_inquiry_by_id_alias(
-    inquiry_id: int,
-    current_admin: User = Depends(get_current_admin),
-    db: Session = Depends(get_db),
-) -> ProjectInquiryOut:
-    return get_inquiry_by_id(inquiry_id=inquiry_id, current_admin=current_admin, db=db)
-
-
-@admin_inquiry_alias_router.patch("/{inquiry_id}", response_model=ProjectInquiryOut)
-@admin_inquiry_alias_router.put("/{inquiry_id}", response_model=ProjectInquiryOut)
-def update_inquiry_status_alias(
-    inquiry_id: int,
-    payload: ProjectInquiryUpdateAdmin,
-    current_admin: User = Depends(get_current_admin),
-    db: Session = Depends(get_db),
-) -> ProjectInquiryOut:
-    return update_inquiry_status(inquiry_id=inquiry_id, payload=payload, current_admin=current_admin, db=db)
-
-
-@admin_inquiry_alias_router.delete("/{inquiry_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_inquiry_alias(
-    inquiry_id: int,
-    current_admin: User = Depends(get_current_admin),
-    db: Session = Depends(get_db),
-):
-    return delete_inquiry(inquiry_id=inquiry_id, current_admin=current_admin, db=db)
-
-
-app.include_router(admin_inquiry_alias_router)
 

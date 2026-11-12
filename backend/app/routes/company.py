@@ -196,11 +196,12 @@ def get_team_members(db: Session = Depends(get_db)) -> List[TeamMemberOut]:
 # Inquiries
 # ---------------------------------------------------------------------------
 @router.post("/inquiries", response_model=ProjectInquiryOut, status_code=status.HTTP_201_CREATED)
+@router.post("/inquiries/", response_model=ProjectInquiryOut, status_code=status.HTTP_201_CREATED)
 def submit_project_inquiry(
     payload: ProjectInquiryCreate,
     db: Session = Depends(get_db),
 ) -> ProjectInquiryOut:
-    """Submits a project inquiry from a prospective client."""
+    """Submits a project or general inquiry from a client or prospective client."""
     full_name = (payload.full_name or payload.client_name or payload.name or "").strip()
     company = (payload.company_name or payload.company or "").strip() or None
     est_budget = (payload.estimated_budget or payload.budget_range or "").strip() or None
@@ -224,12 +225,17 @@ def submit_project_inquiry(
         email=payload.email.lower().strip(),
         phone=payload.phone.strip() if payload.phone else None,
         company_name=company,
+        company=company,
         project_type=proj_type,
         estimated_budget=est_budget,
         expected_timeline=exp_timeline,
+        timeline=exp_timeline,
         project_description=proj_desc,
         attachment_url=payload.attachment_url,
         status="New",
+        inquiry_type=payload.inquiry_type or "general",
+        subject=subject or proj_type,
+        message=raw_desc,
     )
     db.add(inquiry)
     db.commit()

@@ -6,7 +6,12 @@
 const BASE_URL = (
   import.meta.env.VITE_API_BASE_URL ||
   import.meta.env.VITE_API_URL ||
-  ''
+  (typeof window !== 'undefined' &&
+  window.location &&
+  window.location.hostname &&
+  !['localhost', '127.0.0.1', '0.0.0.0', ''].includes(window.location.hostname)
+    ? 'https://infovet.onrender.com'
+    : '')
 ).replace(/\/$/, '');
 
 const TOKEN_KEY = 'infovate_token';
