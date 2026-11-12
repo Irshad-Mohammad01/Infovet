@@ -1,4 +1,4 @@
-"""create infovet job portal tables
+"""create infovate job portal tables
 
 Revision ID: 0002_create_infovet_tables
 Revises: 0001_create_contacts

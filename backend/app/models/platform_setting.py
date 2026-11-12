@@ -23,14 +23,14 @@ class PlatformSetting(Base):
     __tablename__ = "platform_settings"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    platform_name: Mapped[str] = mapped_column(String(120), nullable=False, default="Infovet")
+    platform_name: Mapped[str] = mapped_column(String(120), nullable=False, default="Infovate")
     platform_logo_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
     favicon_url: Mapped[Optional[str]] = mapped_column(String(500), nullable=True)
-    tagline: Mapped[Optional[str]] = mapped_column(String(255), nullable=True, default="Professional Career Portal")
+    tagline: Mapped[Optional[str]] = mapped_column(String(255), nullable=True, default="Enterprise Software & IT Solutions")
     primary_color: Mapped[Optional[str]] = mapped_column(String(30), nullable=True, default="#6025C5")
     secondary_color: Mapped[Optional[str]] = mapped_column(String(30), nullable=True, default="#F8F7FC")
     background_color: Mapped[Optional[str]] = mapped_column(String(30), nullable=True, default="#F8F7FC")
-    support_email: Mapped[Optional[str]] = mapped_column(String(255), nullable=True, default="support@infovet.io")
+    support_email: Mapped[Optional[str]] = mapped_column(String(255), nullable=True, default="support@infovate.io")
     contact_phone: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(

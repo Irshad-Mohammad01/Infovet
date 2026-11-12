@@ -1,5 +1,5 @@
 """
-Authentication and user profile endpoints for Infovet.
+Authentication and user profile endpoints for Infovate.
 """
 
 from datetime import datetime, timezone

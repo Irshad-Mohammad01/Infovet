@@ -48,7 +48,7 @@ const About = () => {
     loadAboutData();
   }, []);
 
-  const companyName = profile?.name || branding?.platform_name || 'INFOVET';
+  const companyName = profile?.name || branding?.platform_name || 'INFOVATE';
   const tagline = profile?.tagline || branding?.tagline || 'Software Development & IT Solutions';
 
   return (

@@ -1,4 +1,4 @@
-"""create software company tables for INFOVET
+"""create software company tables for INFOVATE
 
 Revision ID: 0004_create_software_company_tables
 Revises: 0003_create_platform_settings
@@ -23,7 +23,7 @@ def upgrade() -> None:
     op.create_table(
         'company_profile',
         sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
-        sa.Column('company_name', sa.String(length=120), server_default='INFOVET', nullable=False),
+        sa.Column('company_name', sa.String(length=120), server_default='INFOVATE', nullable=False),
         sa.Column('tagline', sa.String(length=255), server_default='We Build Digital Solutions That Move Businesses Forward.', nullable=False),
         sa.Column('short_description', sa.Text(), nullable=False),
         sa.Column('about_markdown', sa.Text(), nullable=False),
@@ -32,7 +32,7 @@ def upgrade() -> None:
         sa.Column('experience_years', sa.Integer(), server_default='5', nullable=False),
         sa.Column('projects_completed', sa.Integer(), server_default='45', nullable=False),
         sa.Column('satisfied_clients', sa.Integer(), server_default='38', nullable=False),
-        sa.Column('primary_email', sa.String(length=120), server_default='contact@infovet.in', nullable=False),
+        sa.Column('primary_email', sa.String(length=120), server_default='contact@infovate.in', nullable=False),
         sa.Column('phone', sa.String(length=50), server_default='+91 98765 43210', nullable=False),
         sa.Column('address', sa.String(length=255), server_default='Bengaluru, Karnataka, India', nullable=False),
         sa.Column('linkedin_url', sa.String(length=255), nullable=True),

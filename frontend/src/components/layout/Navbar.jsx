@@ -4,8 +4,8 @@ import { Menu, X } from 'lucide-react';
 import Logo from '../ui/Logo';
 
 /**
- * Simplified Public Navbar for INFOVET Software Solutions.
- * - Left: INFOVET Logo + Brand Name.
+ * Simplified Public Navbar for INFOVATE Software Solutions.
+ * - Left: INFOVATE Logo + Brand Name.
  * - Right: Navigation links (Home, About Us, Contact Us).
  * - Clean, modern, responsive full-width layout with comfortable edge padding.
  * - Zero authentication UI (no sign in, register, user dropdown, or admin login).
@@ -36,7 +36,7 @@ const Navbar = () => {
       <div className="header-container">
         {/* Extreme Left: Brand Logo & Wordmark */}
         <div className="header-brand-wrap">
-          <Link to="/" className="header-logo" aria-label="INFOVET Home">
+          <Link to="/" className="header-logo" aria-label="INFOVATE Home">
             <Logo size={32} withWordmark />
           </Link>
         </div>

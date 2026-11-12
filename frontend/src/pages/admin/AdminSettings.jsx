@@ -492,7 +492,7 @@ const AdminSettings = () => {
                   </span>
                 )}
                 <span style={{ fontSize: '1.125rem', fontWeight: 800, color: '#1F1F1F', letterSpacing: '-0.025em' }}>
-                  {brandingForm.platform_name || 'Infovet'}
+                  {brandingForm.platform_name || 'Infovate'}
                 </span>
               </div>
             </div>
@@ -539,7 +539,7 @@ const AdminSettings = () => {
                   </span>
                 )}
                 <span style={{ fontSize: '1.125rem', fontWeight: 800, color: '#FFFFFF', letterSpacing: '-0.025em' }}>
-                  {brandingForm.platform_name || 'Infovet'}
+                  {brandingForm.platform_name || 'Infovate'}
                 </span>
               </div>
             </div>
@@ -577,7 +577,7 @@ const AdminSettings = () => {
                 name="platform_name"
                 type="text"
                 className="form-input"
-                placeholder="e.g. INFOVET"
+                placeholder="e.g. INFOVATE"
                 value={brandingForm.platform_name}
                 onChange={handleBrandingChange}
                 required
@@ -623,7 +623,7 @@ const AdminSettings = () => {
                 name="support_email"
                 type="email"
                 className="form-input"
-                placeholder="support@infovet.in"
+                placeholder="support@infovate.in"
                 value={brandingForm.support_email}
                 onChange={handleBrandingChange}
               />

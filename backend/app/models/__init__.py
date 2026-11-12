@@ -1,5 +1,5 @@
 """
-SQLAlchemy database models for INFOVET Software Development Company.
+SQLAlchemy database models for INFOVATE Software Development Company.
 Preserves existing Contact and historical models while providing modern software company models.
 """
 

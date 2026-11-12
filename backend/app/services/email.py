@@ -1,5 +1,5 @@
 """
-SMTP email notification service for Infovet.
+SMTP email notification service for Infovate.
 
 Designed for complete failure isolation and optional configuration:
 - Inactive by default: If SMTP is unconfigured, calls are simulated in logs without error.
@@ -105,7 +105,7 @@ def _send_email_message(msg: EmailMessage, email_type: str) -> bool:
 def send_contact_notification(data: ContactNotificationData) -> bool:
     """Sends an email notification for a submitted contact form."""
     msg = EmailMessage()
-    msg["Subject"] = f"[Infovet Contact] {data.subject}"
+    msg["Subject"] = f"[Infovate Contact] {data.subject}"
     msg["From"] = f"{settings.effective_sender_name} <{settings.effective_sender_email}>"
     msg["To"] = settings.effective_receiver_email
     msg["Reply-To"] = f"{data.name} <{data.email}>"
@@ -113,7 +113,7 @@ def send_contact_notification(data: ContactNotificationData) -> bool:
     timestamp = data.created_at_str or "Just now"
     ip = data.ip_address or "Unknown"
     body = (
-        f"New Contact Form Submission on Infovet\n"
+        f"New Contact Form Submission on Infovate\n"
         f"=====================================\n\n"
         f"From:       {data.name} <{data.email}>\n"
         f"Date:       {timestamp}\n"
@@ -132,35 +132,35 @@ def send_contact_notification(data: ContactNotificationData) -> bool:
 def send_otp_email(to_email: str, full_name: str, otp_code: str) -> bool:
     """Prepared OTP verification email dispatcher."""
     msg = EmailMessage()
-    msg["Subject"] = f"Your Infovet Verification Code: {otp_code}"
+    msg["Subject"] = f"Your Infovate Verification Code: {otp_code}"
     msg["From"] = f"{settings.effective_sender_name} <{settings.effective_sender_email}>"
     msg["To"] = to_email
     body = (
         f"Hello {full_name},\n\n"
-        f"Your Infovet verification code is:\n\n"
+        f"Your Infovate verification code is:\n\n"
         f"    {otp_code}\n\n"
         f"This code will expire in 15 minutes. If you did not request this verification, please ignore this email.\n\n"
         f"Best regards,\n"
-        f"The Infovet Team"
+        f"The Infovate Team"
     )
     msg.set_content(body)
     return _send_email_message(msg, "OTP Verification")
 
 
 def send_welcome_email(to_email: str, full_name: str) -> bool:
-    """Welcoming newly registered users to Infovet."""
+    """Welcoming newly registered users to Infovate."""
     msg = EmailMessage()
-    msg["Subject"] = "Welcome to Infovet — Your Professional Career Portal"
+    msg["Subject"] = "Welcome to Infovate — Your Professional Career Portal"
     msg["From"] = f"{settings.effective_sender_name} <{settings.effective_sender_email}>"
     msg["To"] = to_email
     body = (
         f"Hello {full_name},\n\n"
-        f"Welcome to Infovet! Your professional account has been successfully created.\n\n"
+        f"Welcome to Infovate! Your professional account has been successfully created.\n\n"
         f"You can now explore open roles, customize your professional profile, upload your CV, "
         f"and track your applications in real-time.\n\n"
         f"Best regards,\n"
-        f"The Infovet Team\n"
-        f"https://infovet.io"
+        f"The Infovate Team\n"
+        f"https://infovate.io"
     )
     msg.set_content(body)
     return _send_email_message(msg, "Welcome Email")
@@ -178,9 +178,9 @@ def send_application_confirmation_email(
         f"Hello {full_name},\n\n"
         f"Your application for the '{job_title}' role at {company_name} has been successfully submitted.\n\n"
         f"The hiring team has received your profile and resume. You can track the status of your application "
-        f"anytime under 'My Applications' on your Infovet dashboard.\n\n"
+        f"anytime under 'My Applications' on your Infovate dashboard.\n\n"
         f"Best of luck!\n"
-        f"The Infovet Team"
+        f"The Infovate Team"
     )
     msg.set_content(body)
     return _send_email_message(msg, "Application Confirmation")
@@ -199,9 +199,9 @@ def send_application_status_update_email(
         f"Hello {full_name},\n\n"
         f"There has been an update regarding your application for '{job_title}' at {company_name}.\n\n"
         f"Current Status: {formatted_status}\n\n"
-        f"Log in to your Infovet account to view full feedback and next steps.\n\n"
+        f"Log in to your Infovate account to view full feedback and next steps.\n\n"
         f"Best regards,\n"
-        f"The Infovet Team"
+        f"The Infovate Team"
     )
     msg.set_content(body)
     return _send_email_message(msg, "Status Update")

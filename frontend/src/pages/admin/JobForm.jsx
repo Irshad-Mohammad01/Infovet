@@ -198,7 +198,7 @@ const JobForm = () => {
         <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '0.25rem' }}>
           {isEditing
             ? 'Update the requirements, terms, or status of this listing.'
-            : 'Publish a new job opening to the Infovet candidate talent pool.'}
+            : 'Publish a new job opening to the Infovate candidate talent pool.'}
         </p>
       </div>
 

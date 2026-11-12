@@ -1,5 +1,5 @@
 """
-Service model representing software development services offered by INFOVET.
+Service model representing software development services offered by INFOVATE.
 """
 
 from datetime import datetime, timezone

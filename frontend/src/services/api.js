@@ -1,5 +1,5 @@
 /**
- * Centralized API service layer for INFOVET Job Portal.
+ * Centralized API service layer for INFOVATE Software Platform.
  * Handles JWT token storage, error formatting, request dispatching, and multipart uploads.
  */
 
@@ -9,11 +9,11 @@ const BASE_URL = (
   ''
 ).replace(/\/$/, '');
 
-const TOKEN_KEY = 'infovet_token';
+const TOKEN_KEY = 'infovate_token';
 
 export const getToken = () => {
   try {
-    return localStorage.getItem(TOKEN_KEY);
+    return localStorage.getItem(TOKEN_KEY) || localStorage.getItem('infovet_token');
   } catch {
     return null;
   }
@@ -30,6 +30,7 @@ export const setToken = (token) => {
 export const clearToken = () => {
   try {
     localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem('infovet_token');
   } catch {
     /* ignore */
   }
@@ -80,7 +81,7 @@ async function request(path, { method = 'GET', body, auth = false, isFormData = 
       body: isFormData ? body : (body === undefined ? undefined : JSON.stringify(body)),
     });
   } catch {
-    throw new ApiError('Could not reach the Infovet server. Please verify your internet connection or check if the backend is running.', 0);
+    throw new ApiError('Could not reach the Infovate server. Please verify your internet connection or check if the backend is running.', 0);
   }
 
   if (response.status === 204) return null;

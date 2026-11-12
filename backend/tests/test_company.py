@@ -1,5 +1,5 @@
 """
-Automated unit tests for INFOVET Software Development Company public and administrative APIs.
+Automated unit tests for INFOVATE Software Development Company public and administrative APIs.
 """
 
 from fastapi.testclient import TestClient
@@ -31,9 +31,9 @@ def client(db_session):
 @pytest.fixture
 def admin_token(db_session):
     admin = User(
-        email="company_admin@infovet.in",
+        email="company_admin@infovate.in",
         hashed_password=hash_password("AdminSecurePass123"),
-        full_name="Infovet Admin",
+        full_name="Infovate Admin",
         role="admin",
         is_active=True,
     )
@@ -63,7 +63,7 @@ def test_public_company_profile(client):
     res = client.get("/api/company/profile")
     assert res.status_code == 200
     data = res.json()
-    assert data["company_name"] == "INFOVET"
+    assert data["company_name"] == "INFOVATE"
     assert "tagline" in data
     assert "mission" in data
 

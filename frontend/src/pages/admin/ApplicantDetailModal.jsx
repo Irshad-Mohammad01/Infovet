@@ -112,7 +112,7 @@ const ApplicantDetailModal = ({ application, isOpen, onClose, onUpdated }) => {
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.8125rem', margin: '0.25rem 0 0 0' }}>
               Applied for{' '}
               <strong>{application.job?.title || 'Unknown Position'}</strong> at{' '}
-              {application.job?.company_name || 'Infovet'}
+              {application.job?.company_name || 'Infovate'}
             </p>
           </div>
 

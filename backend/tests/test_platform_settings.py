@@ -29,7 +29,7 @@ def client(db_session):
 @pytest.fixture
 def admin_token(db_session):
     admin = User(
-        email="test_admin_settings@infovet.io",
+        email="test_admin_settings@infovate.io",
         hashed_password=hash_password("AdminSecurePassword123"),
         full_name="Settings Test Administrator",
         role="admin",
@@ -44,7 +44,7 @@ def admin_token(db_session):
 @pytest.fixture
 def customer_token(db_session):
     customer = User(
-        email="test_customer_settings@infovet.io",
+        email="test_customer_settings@infovate.io",
         hashed_password=hash_password("CustomerPassword123"),
         full_name="Regular Candidate",
         role="customer",
@@ -104,7 +104,7 @@ def test_admin_can_update_platform_branding(client, admin_token):
     assert updated_data["platform_name"] == "Acme Global Careers"
     assert updated_data["platform_logo_url"] == "https://cdn.example.com/acme-logo.svg"
     assert updated_data["primary_color"] == "#4F46E5"
-    assert updated_data["updated_by"] == "test_admin_settings@infovet.io"
+    assert updated_data["updated_by"] == "test_admin_settings@infovate.io"
 
     # Verify public settings endpoint immediately reflects the database changes
     res_pub = client.get("/api/settings/public")

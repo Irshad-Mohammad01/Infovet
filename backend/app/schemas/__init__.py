@@ -1,5 +1,5 @@
 """
-Pydantic schemas for INFOVET.
+Pydantic schemas for INFOVATE.
 Exports both company schemas and historical schemas.
 """
 

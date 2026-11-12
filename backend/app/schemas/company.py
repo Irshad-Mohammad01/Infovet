@@ -1,5 +1,5 @@
 """
-Pydantic schemas for INFOVET Software Development Company website and admin console.
+Pydantic schemas for INFOVATE Software Development Company website and admin console.
 """
 
 from datetime import date, datetime
@@ -11,7 +11,7 @@ from pydantic import BaseModel, ConfigDict, EmailStr, Field, model_validator
 # Company Profile
 # ---------------------------------------------------------------------------
 class CompanyProfileBase(BaseModel):
-    company_name: str = Field(default="INFOVET", max_length=120)
+    company_name: str = Field(default="INFOVATE", max_length=120)
     tagline: str = Field(default="We Build Digital Solutions That Move Businesses Forward.", max_length=255)
     short_description: str = Field(...)
     about_markdown: str = Field(...)

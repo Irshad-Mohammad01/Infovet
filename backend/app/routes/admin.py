@@ -1,5 +1,5 @@
 """
-Administrative management endpoints for Infovet.
+Administrative management endpoints for Infovate.
 All endpoints (except login) require role='admin' authorization.
 """
 

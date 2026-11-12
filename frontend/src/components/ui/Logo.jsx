@@ -4,7 +4,7 @@ import { useBranding } from '../../context/BrandingContext';
 import { normalizeImageUrl } from '../../utils/imageUrl';
 
 /**
- * Dynamic Platform Logo & Brand Identifier for INFOVET.
+ * Dynamic Platform Logo & Brand Identifier for INFOVATE.
  * Renders the database-configured logo URL from the public settings API.
  * Automatically normalizes Google Drive links and relative paths.
  * If no logo URL is configured or if the image fails to load, displays a clean tech icon badge.
@@ -18,7 +18,7 @@ const Logo = ({ size = 32, withWordmark = false, variant = 'default', className 
   const { branding } = useBranding();
   const isLight = variant === 'light';
 
-  const platformName = branding?.platform_name || 'INFOVET';
+  const platformName = branding?.platform_name || 'INFOVATE';
   const rawLogoUrl = branding?.platform_logo_url;
   const logoUrl = normalizeImageUrl(rawLogoUrl);
   const primaryColor = branding?.primary_color || 'var(--primary, #6025C5)';

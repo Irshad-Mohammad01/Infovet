@@ -1,5 +1,5 @@
 """
-Seed script to initialize INFOVET Software Development Company database.
+Seed script to initialize INFOVATE Software Development Company database.
 Populates company profile, services, technologies, sample showcase projects, team, and testimonials.
 """
 
@@ -19,11 +19,11 @@ def seed_company_data():
         # 1. Company Profile
         if not db.query(CompanyProfile).first():
             profile = CompanyProfile(
-                company_name="INFOVET",
+                company_name="INFOVATE",
                 tagline="We Build Digital Solutions That Move Businesses Forward.",
-                short_description="INFOVET is a modern software development startup and digital engineering company building scalable web apps, mobile solutions, and enterprise platforms.",
+                short_description="INFOVATE is a modern software development startup and digital engineering company building scalable web apps, mobile solutions, and enterprise platforms.",
                 about_markdown=(
-                    "INFOVET is an innovative software development company and digital engineering partner. "
+                    "INFOVATE is an innovative software development company and digital engineering partner. "
                     "We specialize in crafting custom web applications, mobile platforms, cloud-native backend systems, and AI-driven automation for forward-thinking enterprises and fast-growing startups.\n\n"
                     "Our engineering philosophy centers around clean architecture, modern frameworks (React, FastAPI, PostgreSQL), agile collaboration, and continuous delivery. "
                     "Whether you're launching an MVP or scaling an enterprise platform, we bring technical excellence to every stage of product development."
@@ -33,12 +33,12 @@ def seed_company_data():
                 experience_years=5,
                 projects_completed=48,
                 satisfied_clients=42,
-                primary_email="contact@infovet.in",
+                primary_email="contact@infovate.in",
                 phone="+91 98765 43210",
                 address="Bengaluru, Karnataka, India",
-                linkedin_url="https://linkedin.com/company/infovet",
-                github_url="https://github.com/infovet",
-                twitter_url="https://twitter.com/infovet",
+                linkedin_url="https://linkedin.com/company/infovate",
+                github_url="https://github.com/infovate",
+                twitter_url="https://twitter.com/infovate",
             )
             db.add(profile)
             print("✓ Seeded Company Profile")
@@ -200,7 +200,7 @@ def seed_company_data():
                     short_description="An enterprise observability and performance monitoring dashboard tracking distributed services, latency metrics, and automated alerts.",
                     full_description=(
                         "PulseCloud is a real-time observability platform engineered to help DevOps and engineering teams visualize application telemetry, API latency, and server utilization.\n\n"
-                        "INFOVET designed and developed the entire application from architecture to release, featuring real-time WebSocket metric streaming, custom customizable dashboard widgets, role-based access control, and automated Slack/Email alert dispatchers."
+                        "INFOVATE designed and developed the entire application from architecture to release, featuring real-time WebSocket metric streaming, custom customizable dashboard widgets, role-based access control, and automated Slack/Email alert dispatchers."
                     ),
                     objectives="Deliver a sub-second latency analytics dashboard capable of aggregating millions of daily server events without browser slowdown.",
                     features=[
@@ -212,8 +212,8 @@ def seed_company_data():
                     ],
                     technologies=["React", "FastAPI", "PostgreSQL", "Redis", "Docker", "Tailwind CSS"],
                     thumbnail_url="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80",
-                    live_url="https://pulsecloud-demo.infovet.in",
-                    github_url="https://github.com/infovet/pulsecloud-showcase",
+                    live_url="https://pulsecloud-demo.infovate.in",
+                    github_url="https://github.com/infovate/pulsecloud-showcase",
                     start_date=date(2024, 2, 1),
                     completion_date=date(2024, 6, 15),
                     status="Completed",
@@ -241,7 +241,7 @@ def seed_company_data():
                     ],
                     technologies=["React", "FastAPI", "PostgreSQL", "Stripe", "Redis", "Tailwind CSS"],
                     thumbnail_url="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80",
-                    live_url="https://omnicart-demo.infovet.in",
+                    live_url="https://omnicart-demo.infovate.in",
                     github_url=None,
                     start_date=date(2024, 5, 10),
                     completion_date=date(2024, 9, 20),
@@ -259,7 +259,7 @@ def seed_company_data():
                     full_description=(
                         "FinTrack is an intuitive wealth companion designed for modern investors. "
                         "The app securely aggregates investment accounts, mutual funds, and fixed deposits into a unified financial dashboard.\n\n"
-                        "INFOVET built the mobile app using React Native, implementing bank-grade AES-256 encryption, biometric authentication, and interactive portfolio performance charts."
+                        "INFOVATE built the mobile app using React Native, implementing bank-grade AES-256 encryption, biometric authentication, and interactive portfolio performance charts."
                     ),
                     objectives="Provide consumers with a secure, beautifully visual mobile interface to monitor and forecast long-term wealth.",
                     features=[
@@ -271,8 +271,8 @@ def seed_company_data():
                     ],
                     technologies=["React Native", "TypeScript", "Python", "PostgreSQL", "FastAPI"],
                     thumbnail_url="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1000&q=80",
-                    live_url="https://fintrack-demo.infovet.in",
-                    github_url="https://github.com/infovet/fintrack-mobile",
+                    live_url="https://fintrack-demo.infovate.in",
+                    github_url="https://github.com/infovate/fintrack-mobile",
                     start_date=date(2024, 7, 1),
                     completion_date=date(2024, 10, 30),
                     status="Completed",
@@ -301,7 +301,7 @@ def seed_company_data():
                     ],
                     technologies=["Python", "FastAPI", "React", "PostgreSQL", "Gemini API", "Docker"],
                     thumbnail_url="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=80",
-                    live_url="https://neuralflow-demo.infovet.in",
+                    live_url="https://neuralflow-demo.infovate.in",
                     github_url=None,
                     start_date=date(2024, 8, 15),
                     completion_date=date(2024, 11, 5),
@@ -334,7 +334,7 @@ def seed_company_data():
                     client_role="Co-Founder & CTO",
                     client_avatar_url="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
                     rating=5,
-                    content="INFOVET transformed our complex data architecture into an intuitive, lightning-fast SaaS product. Their engineering rigor, transparent sprints, and proactive problem solving exceeded all our expectations.",
+                    content="INFOVATE transformed our complex data architecture into an intuitive, lightning-fast SaaS product. Their engineering rigor, transparent sprints, and proactive problem solving exceeded all our expectations.",
                     project_title="PulseCloud SaaS",
                     is_featured=True,
                     display_order=1,
@@ -345,7 +345,7 @@ def seed_company_data():
                     client_role="VP of Digital Commerce",
                     client_avatar_url="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80",
                     rating=5,
-                    content="Working with INFOVET felt like having an elite in-house engineering team. Our e-commerce conversion jumped by 32% within two months of launching the new headless platform.",
+                    content="Working with INFOVATE felt like having an elite in-house engineering team. Our e-commerce conversion jumped by 32% within two months of launching the new headless platform.",
                     project_title="OmniCart Engine",
                     is_featured=True,
                     display_order=2,
@@ -356,7 +356,7 @@ def seed_company_data():
                     client_role="Managing Director",
                     client_avatar_url="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
                     rating=5,
-                    content="The mobile app INFOVET built has received over 4.8 stars on both app stores. Clean code, rock-solid security, and an exceptionally polished UI.",
+                    content="The mobile app INFOVATE built has received over 4.8 stars on both app stores. Clean code, rock-solid security, and an exceptionally polished UI.",
                     project_title="FinTrack Mobile",
                     is_featured=True,
                     display_order=3,
@@ -403,7 +403,7 @@ def seed_company_data():
             print("✓ Seeded Team Members")
 
         db.commit()
-        print("✓ All INFOVET Software Development Company seed data applied successfully!")
+        print("✓ All INFOVATE Software Development Company seed data applied successfully!")
 
     except Exception as e:
         db.rollback()

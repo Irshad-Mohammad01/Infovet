@@ -1,5 +1,5 @@
 """
-Saved jobs / candidate bookmarking endpoints for Infovet.
+Saved jobs / candidate bookmarking endpoints for Infovate.
 """
 
 from typing import List

@@ -269,7 +269,7 @@ const ManageApplicants = () => {
                         {app.job?.title || 'Unknown Position'}
                       </div>
                       <div style={{ color: 'var(--text-secondary)', fontSize: '0.8125rem' }}>
-                        {app.job?.company_name || 'Infovet'}
+                        {app.job?.company_name || 'Infovate'}
                       </div>
                     </td>
 

@@ -1,5 +1,5 @@
 """
-Administrative API routes for INFOVET Software Development Company management console.
+Administrative API routes for INFOVATE Software Development Company management console.
 All routes require administrator authentication.
 """
 

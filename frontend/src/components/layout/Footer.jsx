@@ -6,9 +6,9 @@ import { useBranding } from '../../context/BrandingContext';
 
 const Footer = () => {
   const { branding } = useBranding();
-  const platformName = branding?.platform_name || 'INFOVET';
+  const platformName = branding?.platform_name || 'INFOVATE';
   const tagline = branding?.tagline || 'Software Development & IT Solutions';
-  const supportEmail = branding?.support_email || 'contact@infovet.in';
+  const supportEmail = branding?.support_email || 'contact@infovate.in';
   const contactPhone = branding?.contact_phone || '+91 98765 43210';
 
   return (

@@ -400,7 +400,7 @@ const ManageInquiries = () => {
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <a
-                  href={`mailto:${activeInquiry.email}?subject=Regarding Your INFOVET Project Inquiry`}
+                  href={`mailto:${activeInquiry.email}?subject=Regarding Your INFOVATE Project Inquiry`}
                   className="btn btn-secondary btn-sm"
                   style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}
                 >

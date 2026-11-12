@@ -329,7 +329,7 @@ const ManageTestimonials = () => {
                   onChange={(e) => setFormData((p) => ({ ...p, testimonial: e.target.value }))}
                   rows={4}
                   required
-                  placeholder="INFOVET transformed our backend systems with exceptional architectural precision..."
+                  placeholder="INFOVATE transformed our backend systems with exceptional architectural precision..."
                   className="form-control"
                 />
               </div>

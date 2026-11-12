@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: infovet-backend
+    name: infovate-backend
     runtime: python
     rootDir: backend
     buildCommand: pip install -r requirements.txt && alembic upgrade head

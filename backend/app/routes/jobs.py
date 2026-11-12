@@ -1,5 +1,5 @@
 """
-Job browsing, search, and category exploration endpoints for Infovet.
+Job browsing, search, and category exploration endpoints for Infovate.
 """
 
 import math

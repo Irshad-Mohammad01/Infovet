@@ -2,14 +2,14 @@ import React, { createContext, useContext, useEffect, useState, useCallback } fr
 import { fetchPublicSettings } from '../services/api';
 
 const DEFAULT_BRANDING = {
-  platform_name: 'Infovet',
+  platform_name: 'Infovate',
   platform_logo_url: null,
   favicon_url: null,
   tagline: 'Software Development & IT Solutions',
   primary_color: '#6025C5',
   secondary_color: '#F8F7FC',
   background_color: '#F8F7FC',
-  support_email: 'contact@infovet.in',
+  support_email: 'contact@infovate.in',
   contact_phone: null,
 };
 

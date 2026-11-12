@@ -116,7 +116,7 @@ class Settings(BaseSettings):
 
     # --- JWT Authentication -------------------------------------------------
     jwt_secret_key: str = Field(
-        default="infovet-jwt-development-secret-key-change-in-production-env-32chars",
+        default="infovate-jwt-development-secret-key-change-in-production-env-32chars",
         description="JWT HMAC secret key",
     )
     jwt_algorithm: str = Field(default="HS256", description="JWT signing algorithm")
@@ -168,7 +168,7 @@ class Settings(BaseSettings):
     smtp_password: str = Field(default="", description="SMTP auth password")
     smtp_sender_email: Optional[str] = Field(default=None, description="Sender email address")
     smtp_from: Optional[str] = Field(default=None)  # Backward compat alias
-    smtp_sender_name: str = Field(default="Infovet", description="Sender display name")
+    smtp_sender_name: str = Field(default="Infovate", description="Sender display name")
     smtp_use_tls: bool = Field(default=True, description="Enable STARTTLS")
     smtp_starttls: Optional[bool] = Field(default=None)  # Backward compat alias
     smtp_use_ssl: bool = Field(default=False, description="Enable SSL")
@@ -185,12 +185,12 @@ class Settings(BaseSettings):
             self.smtp_sender_email
             or self.smtp_from
             or self.effective_smtp_user
-            or "no-reply@infovet.io"
+            or "no-reply@infovate.io"
         ).strip()
 
     @property
     def effective_sender_name(self) -> str:
-        return self.smtp_sender_name or "Infovet"
+        return self.smtp_sender_name or "Infovate"
 
     @property
     def effective_use_tls(self) -> bool:

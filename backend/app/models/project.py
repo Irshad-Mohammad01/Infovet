@@ -1,5 +1,5 @@
 """
-Project & ProjectImage models for INFOVET software portfolio.
+Project & ProjectImage models for INFOVATE software portfolio.
 """
 
 from datetime import date, datetime, timezone

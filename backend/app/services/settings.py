@@ -13,14 +13,14 @@ def get_or_create_platform_settings(db: Session) -> PlatformSetting:
     settings_record = db.query(PlatformSetting).order_by(PlatformSetting.id.asc()).first()
     if not settings_record:
         settings_record = PlatformSetting(
-            platform_name="Infovet",
+            platform_name="Infovate",
             platform_logo_url=None,
             favicon_url=None,
-            tagline="Professional Career Portal",
+            tagline="Enterprise Software & IT Solutions",
             primary_color="#6025C5",
             secondary_color="#F8F7FC",
             background_color="#F8F7FC",
-            support_email="support@infovet.io",
+            support_email="support@infovate.io",
             contact_phone=None,
         )
         db.add(settings_record)

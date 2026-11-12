@@ -41,7 +41,7 @@ const Contact = () => {
     }
   }, [preService, preSubject]);
 
-  const supportEmail = branding?.support_email || 'contact@infovet.in';
+  const supportEmail = branding?.support_email || 'contact@infovate.in';
   const contactPhone = branding?.contact_phone || '+91 98765 43210';
 
   const handleChange = (e) => {
@@ -123,7 +123,7 @@ const Contact = () => {
               letterSpacing: '-0.02em',
             }}
           >
-            Contact <span style={{ color: 'var(--primary)' }}>INFOVET</span>
+            Contact <span style={{ color: 'var(--primary)' }}>INFOVATE</span>
           </h1>
           <p
             style={{
@@ -174,7 +174,7 @@ const Contact = () => {
                     Inquiry Received Successfully!
                   </h3>
                   <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.6, maxWidth: '450px', margin: '0 auto 2rem' }}>
-                    Thank you for reaching out to INFOVET. Our team has received your message and will review your inquiry within 24 hours.
+                    Thank you for reaching out to INFOVATE. Our team has received your message and will review your inquiry within 24 hours.
                   </p>
                   <button
                     type="button"

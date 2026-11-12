@@ -1,6 +1,6 @@
-# INFOVET — Local Execution & Development Guide
+# INFOVATE — Local Execution & Development Guide
 
-This guide walks you through running the complete **INFOVET** platform (FastAPI Python Backend + React 18 / Vite Frontend + Neon PostgreSQL) on your local machine.
+This guide walks you through running the complete **INFOVATE** platform (FastAPI Python Backend + React 18 / Vite Frontend + Neon PostgreSQL) on your local machine.
 
 ---
 
@@ -9,7 +9,7 @@ This guide walks you through running the complete **INFOVET** platform (FastAPI 
 | Component | URL / Location | Credentials / Notes |
 | :--- | :--- | :--- |
 | **Public Job Portal** | [http://localhost:5173](http://localhost:5173) | Free public access; candidate signup at `/register` |
-| **Admin Console** | [http://localhost:5173/admin/login](http://localhost:5173/admin/login) | **Email:** `admin@inofovet.in` (or `admin@infovet.io`)<br>**Password:** `Admin@123456` |
+| **Admin Console** | [http://localhost:5173/admin/login](http://localhost:5173/admin/login) | **Email:** `admin@infovate.in` (or `admin@infovate.io`)<br>**Password:** `Admin@123456` |
 | **FastAPI Backend Base** | [http://127.0.0.1:8000](http://127.0.0.1:8000) | ASGI Uvicorn Server |
 | **Interactive Swagger API Docs** | [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) | Full API testing console with Bearer token support |
 | **ReDoc API Documentation** | [http://127.0.0.1:8000/redoc](http://127.0.0.1:8000/redoc) | Clean specification viewer |

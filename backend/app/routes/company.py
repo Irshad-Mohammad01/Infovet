@@ -1,5 +1,5 @@
 """
-Public API routes for INFOVET Software Development Company website.
+Public API routes for INFOVATE Software Development Company website.
 Provides dynamic database content for services, projects, technologies, team, testimonials, and inquiries.
 """
 
@@ -35,11 +35,11 @@ def get_or_create_company_profile(db: Session) -> CompanyProfile:
     profile = db.query(CompanyProfile).first()
     if not profile:
         profile = CompanyProfile(
-            company_name="INFOVET",
+            company_name="INFOVATE",
             tagline="We Build Digital Solutions That Move Businesses Forward.",
-            short_description="INFOVET is a modern software engineering partner crafting cutting-edge web, mobile, and enterprise digital solutions.",
+            short_description="INFOVATE is a modern software engineering partner crafting cutting-edge web, mobile, and enterprise digital solutions.",
             about_markdown=(
-                "INFOVET is an agile software development startup and digital engineering company. "
+                "INFOVATE is an agile software development startup and digital engineering company. "
                 "We architect, develop, and scale mission-critical digital products for startups and enterprises worldwide. "
                 "Our team combines deep technical expertise in React, FastAPI, Python, cloud architectures, and user-centric design "
                 "to deliver robust, elegant, and market-ready software solutions."
@@ -49,12 +49,12 @@ def get_or_create_company_profile(db: Session) -> CompanyProfile:
             experience_years=5,
             projects_completed=45,
             satisfied_clients=38,
-            primary_email="contact@infovet.in",
+            primary_email="contact@infovate.in",
             phone="+91 98765 43210",
             address="Bengaluru, Karnataka, India",
-            linkedin_url="https://linkedin.com/company/infovet",
-            github_url="https://github.com/infovet",
-            twitter_url="https://twitter.com/infovet",
+            linkedin_url="https://linkedin.com/company/infovate",
+            github_url="https://github.com/infovate",
+            twitter_url="https://twitter.com/infovate",
         )
         db.add(profile)
         db.commit()
@@ -158,7 +158,7 @@ def get_technologies(
     featured: Optional[bool] = Query(None, description="Filter featured only"),
     db: Session = Depends(get_db),
 ) -> List[TechnologyOut]:
-    """Returns technology stacks used by INFOVET."""
+    """Returns technology stacks used by INFOVATE."""
     query = db.query(Technology)
     if category and category.lower() != "all":
         query = query.filter(Technology.category.ilike(f"%{category.strip()}%"))

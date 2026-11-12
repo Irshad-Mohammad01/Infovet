@@ -1,5 +1,5 @@
 """
-Company Profile model for INFOVET Software Development Company.
+Company Profile model for INFOVATE Software Development Company.
 Stores dynamic company details, mission, vision, statistics, and coordinates.
 """
 
@@ -14,7 +14,7 @@ class CompanyProfile(Base):
     __tablename__ = "company_profile"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    company_name: Mapped[str] = mapped_column(String(120), default="INFOVET", nullable=False)
+    company_name: Mapped[str] = mapped_column(String(120), default="INFOVATE", nullable=False)
     tagline: Mapped[str] = mapped_column(
         String(255),
         default="We Build Digital Solutions That Move Businesses Forward.",
@@ -22,7 +22,7 @@ class CompanyProfile(Base):
     )
     short_description: Mapped[str] = mapped_column(
         Text,
-        default="INFOVET is a modern software development startup and digital engineering partner.",
+        default="INFOVATE is a modern software development startup and digital engineering partner.",
         nullable=False,
     )
     about_markdown: Mapped[str] = mapped_column(
@@ -43,12 +43,12 @@ class CompanyProfile(Base):
     experience_years: Mapped[int] = mapped_column(Integer, default=5, nullable=False)
     projects_completed: Mapped[int] = mapped_column(Integer, default=45, nullable=False)
     satisfied_clients: Mapped[int] = mapped_column(Integer, default=38, nullable=False)
-    primary_email: Mapped[str] = mapped_column(String(120), default="contact@infovet.in", nullable=False)
+    primary_email: Mapped[str] = mapped_column(String(120), default="contact@infovate.in", nullable=False)
     phone: Mapped[str] = mapped_column(String(50), default="+91 98765 43210", nullable=False)
     address: Mapped[str] = mapped_column(String(255), default="Bengaluru, Karnataka, India", nullable=False)
-    linkedin_url: Mapped[str] = mapped_column(String(255), default="https://linkedin.com/company/infovet", nullable=True)
-    github_url: Mapped[str] = mapped_column(String(255), default="https://github.com/infovet", nullable=True)
-    twitter_url: Mapped[str] = mapped_column(String(255), default="https://twitter.com/infovet", nullable=True)
+    linkedin_url: Mapped[str] = mapped_column(String(255), default="https://linkedin.com/company/infovate", nullable=True)
+    github_url: Mapped[str] = mapped_column(String(255), default="https://github.com/infovate", nullable=True)
+    twitter_url: Mapped[str] = mapped_column(String(255), default="https://twitter.com/infovate", nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),

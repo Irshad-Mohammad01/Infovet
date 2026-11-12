@@ -69,7 +69,7 @@ const Home = () => {
     loadHomeData();
   }, []);
 
-  const companyName = profile?.name || branding?.platform_name || 'INFOVET';
+  const companyName = profile?.name || branding?.platform_name || 'INFOVATE';
   const tagline = profile?.tagline || branding?.tagline || 'Software Development & IT Solutions';
 
   return (
@@ -120,7 +120,7 @@ const Home = () => {
             }}
           >
             {profile?.description ||
-              'INFOVET is a modern software development startup. We design, architect, and ship high-performance web platforms, mobile apps, SaaS ecosystems, and automated cloud backends.'}
+              'INFOVATE is a modern software development startup. We design, architect, and ship high-performance web platforms, mobile apps, SaaS ecosystems, and automated cloud backends.'}
           </p>
 
           <div
@@ -274,7 +274,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Engineering Principles / The INFOVET Standard */}
+      {/* Engineering Principles / The INFOVATE Standard */}
       <section style={{ padding: 'clamp(4rem, 8vw, 6rem) 0', backgroundColor: 'var(--bg-inverse)', color: '#FFFFFF' }}>
         <div className="container">
           <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 3.5rem' }}>
@@ -289,7 +289,7 @@ const Home = () => {
                 marginBottom: '0.75rem',
               }}
             >
-              The INFOVET Standard
+              The INFOVATE Standard
             </span>
             <h2 style={{ fontSize: 'clamp(1.85rem, 4vw, 2.5rem)', fontWeight: 800, color: '#FFFFFF', lineHeight: 1.2 }}>
               Engineering Precision & Business Alignment

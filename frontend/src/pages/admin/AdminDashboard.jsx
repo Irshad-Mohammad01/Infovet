@@ -130,7 +130,7 @@ const AdminDashboard = () => {
             Executive Dashboard
           </h1>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-            Real-time analytics and management for INFOVET Software Solutions.
+            Real-time analytics and management for INFOVATE Software Solutions.
           </p>
         </div>
 

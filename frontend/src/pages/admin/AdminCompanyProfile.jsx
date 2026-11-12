@@ -170,7 +170,7 @@ const AdminCompanyProfile = () => {
               value={profile.company_name}
               onChange={handleChange}
               required
-              placeholder="INFOVET"
+              placeholder="INFOVATE"
               className="form-control"
             />
           </div>
@@ -195,7 +195,7 @@ const AdminCompanyProfile = () => {
             value={profile.short_description}
             onChange={handleChange}
             required
-            placeholder="INFOVET is a modern software development startup..."
+            placeholder="INFOVATE is a modern software development startup..."
             className="form-control"
           />
         </div>
@@ -296,7 +296,7 @@ const AdminCompanyProfile = () => {
               name="primary_email"
               value={profile.primary_email}
               onChange={handleChange}
-              placeholder="contact@infovet.in"
+              placeholder="contact@infovate.in"
               className="form-control"
             />
           </div>
@@ -338,7 +338,7 @@ const AdminCompanyProfile = () => {
               name="linkedin_url"
               value={profile.linkedin_url}
               onChange={handleChange}
-              placeholder="https://linkedin.com/company/infovet"
+              placeholder="https://linkedin.com/company/infovate"
               className="form-control"
             />
           </div>
@@ -349,7 +349,7 @@ const AdminCompanyProfile = () => {
               name="github_url"
               value={profile.github_url}
               onChange={handleChange}
-              placeholder="https://github.com/infovet"
+              placeholder="https://github.com/infovate"
               className="form-control"
             />
           </div>
@@ -360,7 +360,7 @@ const AdminCompanyProfile = () => {
               name="twitter_url"
               value={profile.twitter_url}
               onChange={handleChange}
-              placeholder="https://twitter.com/infovet"
+              placeholder="https://twitter.com/infovate"
               className="form-control"
             />
           </div>

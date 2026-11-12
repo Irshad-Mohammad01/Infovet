@@ -1,5 +1,5 @@
 """
-Job Category database model for Infovet.
+Job Category database model for Infovate.
 """
 
 from datetime import datetime

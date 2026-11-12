@@ -1,5 +1,5 @@
 """
-Saved job bookmarks database model for Infovet.
+Saved job bookmarks database model for Infovate.
 """
 
 from datetime import datetime

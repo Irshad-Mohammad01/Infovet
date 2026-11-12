@@ -1,5 +1,5 @@
 """
-INFOVET Python Backend Application.
+INFOVATE Python Backend Application.
 
 FastAPI backend providing:
 - Authentication & Candidate profiles (JWT + bcrypt)
@@ -52,7 +52,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)-8s [%(name)s] %(message)s",
 )
-logger = logging.getLogger("infovet.api")
+logger = logging.getLogger("infovate.api")
 
 
 @asynccontextmanager
@@ -61,7 +61,7 @@ async def lifespan(_: FastAPI):
     upload_path = Path(settings.upload_dir)
     for sub in ["resumes", "avatars", "logos", "projects", "services", "team", "media", "attachments"]:
         (upload_path / sub).mkdir(parents=True, exist_ok=True)
-    logger.info("INFOVET Software Company API initialized successfully in %s mode.", settings.environment)
+    logger.info("INFOVATE Software Company API initialized successfully in %s mode.", settings.environment)
 
     if not settings.is_email_configured:
         logger.info("SMTP is unconfigured: email notifications will be simulated in server logs.")
@@ -70,8 +70,8 @@ async def lifespan(_: FastAPI):
 
 
 app = FastAPI(
-    title="INFOVET Software Development Company API",
-    description="Production REST API for INFOVET — Software Development & IT Solutions Company.",
+    title="INFOVATE Software Development Company API",
+    description="Production REST API for INFOVATE — Software Development & IT Solutions Company.",
     version="3.0.0",
     lifespan=lifespan,
 )
@@ -80,7 +80,7 @@ app = FastAPI(
 @app.get("/health", tags=["system"])
 def health_check():
     """Lightweight platform health check endpoint."""
-    return {"status": "ok", "app": "INFOVET API"}
+    return {"status": "ok", "app": "INFOVATE API"}
 
 
 @app.exception_handler(Exception)

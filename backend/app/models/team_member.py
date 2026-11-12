@@ -1,5 +1,5 @@
 """
-TeamMember model representing INFOVET software engineers, leaders, and designers.
+TeamMember model representing INFOVATE software engineers, leaders, and designers.
 """
 
 from datetime import datetime, timezone

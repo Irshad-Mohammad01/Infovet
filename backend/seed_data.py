@@ -1,5 +1,5 @@
 """
-Data seeder for initial Infovet categories, sample jobs, and default admin account.
+Data seeder for initial Infovate categories, sample jobs, and default admin account.
 Run with: python seed_data.py
 """
 
@@ -19,17 +19,17 @@ from app.services.settings import get_or_create_platform_settings
 def seed_database():
     db: Session = SessionLocal()
     try:
-        print("Starting Infovet database seeding...")
+        print("Starting Infovate database seeding...")
 
         # 1. Seed Admin Users
-        admin_emails = ["admin@inofovet.in", "admin@infovet.in", "admin@infovet.io"]
+        admin_emails = ["admin@infovate.in", "admin@infovate.io", "admin@inofovet.in", "admin@infovet.in", "admin@infovet.io"]
         for admin_email in admin_emails:
             admin_user = db.query(User).filter(User.email == admin_email).first()
             if not admin_user:
                 admin_user = User(
                     email=admin_email,
                     hashed_password=hash_password("Admin@123456"),
-                    full_name="Infovet Administrator",
+                    full_name="Infovate Administrator",
                     role="admin",
                     is_active=True,
                     is_verified=True,

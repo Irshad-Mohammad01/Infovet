@@ -1,5 +1,5 @@
 """
-Job listing database model for Infovet.
+Job listing database model for Infovate.
 """
 
 from datetime import datetime

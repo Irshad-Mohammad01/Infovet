@@ -14,7 +14,7 @@ import Contact from './pages/Contact';
 import './styles/index.css';
 
 /**
- * INFOVET Software Solutions Website
+ * INFOVATE Software Solutions Website
  * Simplified Public Structure:
  * 1. Home ("/")
  * 2. About Us ("/about")

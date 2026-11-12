@@ -1,5 +1,5 @@
 """
-User database model for Infovet authentication, roles, and profiles.
+User database model for Infovate authentication, roles, and profiles.
 """
 
 from datetime import datetime

@@ -21,7 +21,7 @@ import { useAuth } from '../../context/AuthContext';
 import { useBranding } from '../../context/BrandingContext';
 
 /**
- * Dedicated Executive Administration Layout for INFOVET Software Solutions.
+ * Dedicated Executive Administration Layout for INFOVATE Software Solutions.
  * Features a distinct dark command sidebar (#130D24) paired with a high-visibility topbar
  * and clean data-table friendly content workspace.
  */
@@ -259,7 +259,7 @@ const AdminLayout = () => {
                   overflow: 'hidden',
                 }}
               >
-                {user?.email || 'admin@infovet.in'}
+                {user?.email || 'admin@infovate.in'}
               </div>
             </div>
           </div>
@@ -333,7 +333,7 @@ const AdminLayout = () => {
             </button>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <span style={{ fontSize: '0.9375rem', fontWeight: 700, color: 'var(--text)' }}>
-                {branding?.platform_name || 'Infovet'} Administration Console
+                {branding?.platform_name || 'Infovate'} Administration Console
               </span>
             </div>
           </div>

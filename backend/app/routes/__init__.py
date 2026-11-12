@@ -1,5 +1,5 @@
 """
-Routes package for INFOVET API.
+Routes package for INFOVATE API.
 Exports public company routes, admin company console routes, auth, settings, uploads, and contact.
 """
 
